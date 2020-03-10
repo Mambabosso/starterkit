@@ -1,0 +1,14 @@
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user: ${MYSQL_USERNAME}
+  password: ${MYSQL_PASSWORD}
+  url: ${MYSQL_URL}
+
+server:
+  maxThreads: 128
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
