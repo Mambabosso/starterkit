@@ -1,15 +1,21 @@
 package com.github.mambabosso.starterkit;
 
+import com.github.mambabosso.starterkit.auth.UserAuthenticator;
+import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
 import com.github.mambabosso.starterkit.resources.RegisterResource;
 import com.github.mambabosso.starterkit.user.User;
 import com.github.mambabosso.starterkit.user.UserDAO;
 import com.github.mambabosso.starterkit.user.UserService;
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 public final class Starterkit extends Application<StarterkitConfiguration> {
 
@@ -49,6 +55,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
         this.configuration = starterkitConfiguration;
         setUrlPattern();
         registerHealthChecks();
+        registerAuth();
         createDAOServices();
         registerResources();
     }
@@ -64,6 +71,16 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
 
     private void registerHealthChecks() {
         environment.healthChecks().register("DatabaseHealthCheck", new DatabaseHealthCheck());
+    }
+
+    private void registerAuth() {
+        BasicCredentialAuthFilter.Builder<User> builder = new BasicCredentialAuthFilter.Builder<>();
+        builder.setAuthenticator(new UserAuthenticator());
+        builder.setAuthorizer(new UserAuthorizer());
+        builder.setRealm("Starterkit Realm");
+        environment.jersey().register(new AuthDynamicFeature(builder.buildAuthFilter()));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
     }
 
     private void createDAOServices() {
