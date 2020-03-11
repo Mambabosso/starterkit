@@ -8,6 +8,7 @@ import com.github.mambabosso.starterkit.user.User;
 import com.github.mambabosso.starterkit.user.UserDAO;
 import com.github.mambabosso.starterkit.user.UserService;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
@@ -46,6 +47,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     @Override
     public void initialize(final Bootstrap<StarterkitConfiguration> bootstrap) {
         this.bootstrap = bootstrap;
+        registerWebApp();
         registerHibernateBundle();
     }
 
@@ -58,6 +60,10 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
         registerAuth();
         createDAOServices();
         registerResources();
+    }
+
+    private void registerWebApp() {
+        bootstrap.addBundle(new AssetsBundle("/webapp", "/", "index.html"));
     }
 
     private void registerHibernateBundle() {
