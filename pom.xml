@@ -19,6 +19,18 @@
         <maven.compiler.release>8</maven.compiler.release>
     </properties>
 
+    <scm>
+        <connection>scm:git:https://github.com/Mambabosso/starterkit</connection>
+        <developerConnection>scm:git:git@github.com:Mambabosso/starterkit.git</developerConnection>
+        <url>https://github.com/Mambabosso/starterkit</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Mambabosso/starterkit/issues</url>
+    </issueManagement>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
