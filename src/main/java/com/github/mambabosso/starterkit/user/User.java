@@ -1,19 +1,18 @@
 package com.github.mambabosso.starterkit.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.Objects;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "User")
 public final class User implements Principal, Serializable {
@@ -40,12 +39,17 @@ public final class User implements Principal, Serializable {
     @Column(name = "Token")
     private String token;
 
+    private User() {
+    }
+
     @Override
     public String getName() {
         return name;
     }
 
     public static User create(String name, String plain_password) {
+        Objects.requireNonNull(name);
+        Objects.requireNonNull(plain_password);
         User user = new User();
         user.setName(name);
         user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(12)));

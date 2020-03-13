@@ -1,5 +1,6 @@
 package com.github.mambabosso.starterkit.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public final class Result<T extends Serializable> implements Serializable {
 
     @JsonProperty
@@ -17,10 +19,7 @@ public final class Result<T extends Serializable> implements Serializable {
     private T value;
 
     @JsonProperty
-    private Exception error;
-
-    @JsonProperty
-    private String errorMessage;
+    private String error;
 
     private Result() {
     }
@@ -40,29 +39,11 @@ public final class Result<T extends Serializable> implements Serializable {
         return result;
     }
 
-    public static <T extends Serializable> Result<T> failure(final Exception error) {
+    public static <T extends Serializable> Result<T> failure(final String error) {
         Objects.requireNonNull(error);
         Result<T> result = new Result<>();
         result.setSuccess(false);
         result.setError(error);
-        return result;
-    }
-
-    public static <T extends Serializable> Result<T> failure(final String errorMessage) {
-        Objects.requireNonNull(errorMessage);
-        Result<T> result = new Result<>();
-        result.setSuccess(false);
-        result.setErrorMessage(errorMessage);
-        return result;
-    }
-
-    public static <T extends Serializable> Result<T> failure(final Exception error, final String errorMessage) {
-        Objects.requireNonNull(error);
-        Objects.requireNonNull(errorMessage);
-        Result<T> result = new Result<>();
-        result.setSuccess(false);
-        result.setError(error);
-        result.setErrorMessage(errorMessage);
         return result;
     }
 

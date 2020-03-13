@@ -22,7 +22,7 @@ public abstract class GenericDAO<T extends Serializable> extends AbstractDAO<T> 
         return currentSession();
     }
 
-    protected JPAQuery<T> query(long offset, long limit) {
+    protected final JPAQuery<T> query(final long offset, final long limit) {
         JPAQuery<T> query = new JPAQuery<>(session());
         if (offset > -1) {
             query = query.offset(offset);
@@ -33,7 +33,7 @@ public abstract class GenericDAO<T extends Serializable> extends AbstractDAO<T> 
         return query;
     }
 
-    protected JPAQuery<T> query() {
+    protected final JPAQuery<T> query() {
         return query(-1, -1);
     }
 
@@ -47,7 +47,7 @@ public abstract class GenericDAO<T extends Serializable> extends AbstractDAO<T> 
         return Optional.ofNullable(session().get(getEntityClass(), id));
     }
 
-    protected SessionFactory getSessionFactory() {
+    protected final SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 

@@ -26,24 +26,25 @@ public class RegisterResource {
     @UnitOfWork
     @Path("/new")
     public Response register(DataMap dataMap) {
-        String name = dataMap.tryGet("name");
-        String password = dataMap.tryGet("password");
-        Result<User> user = userService.register(name, password);
+        String name = dataMap.tryGet("name", String.class);
+        String mail = dataMap.tryGet("mail", String.class);
+        String password = dataMap.tryGet("password", String.class);
+        Result<User> user = userService.register(name, mail, password);
         if (user.isSuccess()) {
-            return Response.ok(user.getValue()).build();
+            return Response.ok(user).build();
         }
-        return Response.status(400).build();
+        return Response.status(400).entity(user).build();
     }
 
     /*@GET
     @UnitOfWork
     @Path("/new/create")
-    public Response register(@QueryParam("name") String name, @QueryParam("password") String password) {
-        Optional<User> user = userService.register(name, password);
-        if (user.isPresent()) {
-            return Response.ok(user.get()).build();
+    public Response register(@QueryParam("name") String name, @QueryParam("mail") String mail, @QueryParam("password") String password) {
+        Result<User> user = userService.register(name, mail, password);
+        if (user.isSuccess()) {
+            return Response.ok(user).build();
         }
-        return Response.status(400).build();
+        return Response.status(400).entity(user).build();
     }*/
 
 }
