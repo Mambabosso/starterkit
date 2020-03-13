@@ -1,8 +1,8 @@
 package com.github.mambabosso.starterkit.resources;
 
-import com.github.mambabosso.starterkit.data.Data;
 import com.github.mambabosso.starterkit.user.User;
 import com.github.mambabosso.starterkit.user.UserService;
+import com.github.mambabosso.starterkit.util.Data;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;

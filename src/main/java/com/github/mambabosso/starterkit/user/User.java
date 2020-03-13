@@ -28,6 +28,9 @@ public final class User implements Principal, Serializable {
     @Column(name = "Name", unique = true)
     private String name;
 
+    @Column(name = "Mail")
+    private String mail;
+
     @JsonIgnore
     @NotNull
     @Column(name = "Password")
@@ -45,7 +48,7 @@ public final class User implements Principal, Serializable {
     public static User create(String name, String plain_password) {
         User user = new User();
         user.setName(name);
-        user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(15)));
+        user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(12)));
         return user;
     }
 

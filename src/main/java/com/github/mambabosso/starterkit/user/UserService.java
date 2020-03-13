@@ -1,6 +1,7 @@
 package com.github.mambabosso.starterkit.user;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
+import com.github.mambabosso.starterkit.util.Result;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -15,8 +16,8 @@ public final class UserService {
         this.userDAO = Objects.requireNonNull(userDAO);
     }
 
-    public Optional<User> register(String name, String password) {
-        return Optional.empty();
+    public Result<User> register(String name, String password) {
+        return Result.failure("");
     }
 
 }
