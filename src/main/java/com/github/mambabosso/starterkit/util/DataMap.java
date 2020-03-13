@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public final class Data implements Serializable {
+public final class DataMap implements Serializable {
 
     @JsonProperty("data")
     private Map<String, String> dataMap;
 
-    public Data() {
+    public DataMap() {
     }
 
     public String tryGet(String key) {
@@ -31,8 +31,8 @@ public final class Data implements Serializable {
         this.dataMap = Objects.requireNonNull(dataMap);
     }
 
-    public static Data create() {
-        Data result = new Data();
+    public static DataMap create() {
+        DataMap result = new DataMap();
         result.setDataMap(new HashMap<String, String>());
         return result;
     }
