@@ -16,8 +16,24 @@ public final class UserService {
         this.userDAO = Objects.requireNonNull(userDAO);
     }
 
-    public Result<User> register(String name, String password) {
-        return Result.failure("");
+    public Result<User> register(String name, String mail, String password) {
+        try {
+            if (name == null || name.trim().isEmpty()) {
+                return Result.failure("name can not be null or empty");
+            }
+            if (mail != null && !mail.contains("@")) {
+                return Result.failure("mail does not contain @");
+            }
+            if (password == null || password.trim().isEmpty()) {
+                return Result.failure("password can not be null or empty");
+            }
+            if (userDAO.getUserByName(name).isPresent()) {
+                return Result.failure("name is already taken");
+            }
+            return Result.success(userDAO.create(name, mail, password));
+        } catch (Exception ex) {
+            return Result.failure(ex.getMessage());
+        }
     }
 
 }
