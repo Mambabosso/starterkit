@@ -4,10 +4,12 @@ const src = path.resolve(__dirname, "../../..", "src", "main", "resources", "web
 
 const config = {
   entry: path.resolve(src, "starterkit", "index.js"),
-  output: "starterkit_bundle.js"
+  output: "bundle.js",
+  websiteTitle: "Starterkit"
 };
 
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
@@ -43,6 +45,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+      title: config.websiteTitle
+    })
   ]
 };
