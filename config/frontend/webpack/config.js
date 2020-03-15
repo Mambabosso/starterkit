@@ -5,7 +5,8 @@ const src = path.resolve(__dirname, "../../..", "src", "main", "resources", "web
 const config = {
   entry: path.resolve(src, "starterkit", "index.js"),
   output: "bundle.js",
-  websiteTitle: "Starterkit"
+  websiteTitle: "Starterkit",
+  devServerPort: 9000
 };
 
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
@@ -49,5 +50,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: config.websiteTitle
     })
-  ]
+  ],
+  devServer: {
+    contentBase: src,
+    port: config.devServerPort,
+    inline: true,
+    hot: true
+  }
 };
