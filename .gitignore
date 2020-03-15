@@ -4,6 +4,7 @@ node_modules/
 target/
 logs/
 *.class
+starterkit_bundle.js
 
 # IntelliJ IDEA
 .idea/
