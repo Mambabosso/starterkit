@@ -1,12 +1,10 @@
 <template>
-  <div id="register-form">
-    <h1>Register</h1>
-  </div>
+  <div id="start"></div>
 </template>
 
 <script>
 export default {
-  name: "RegisterForm"
+  name: "Start"
 };
 </script>
 

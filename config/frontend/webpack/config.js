@@ -51,6 +51,10 @@ module.exports = {
       title: config.websiteTitle
     })
   ],
+  performance: {
+    maxEntrypointSize: 500000,
+    maxAssetSize: 500000
+  },
   devServer: {
     contentBase: src,
     port: config.devServerPort,
