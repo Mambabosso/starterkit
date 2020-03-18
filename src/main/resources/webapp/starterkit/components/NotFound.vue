@@ -1,6 +1,10 @@
 <template>
   <div class="not-found">
-    <h1>Not found...</h1>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1>Page not found...</h1>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,4 +15,10 @@ export default {
 </script>
 
 <style scoped>
+.jumbotron {
+  padding: 8px;
+  margin: auto;
+  width: 60%;
+  border: 1px solid lightgray;
+}
 </style>

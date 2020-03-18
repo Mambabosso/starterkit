@@ -1,5 +1,5 @@
 <template>
-  <div class="register-form">
+  <div class="login-form">
     <form>
       <div class="form-group">
         <label>Username</label>
@@ -7,16 +7,6 @@
           class="form-control"
           v-model="username"
           placeholder="Enter username"
-          :readonly="loading"
-        />
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          class="form-control"
-          v-model="email"
-          placeholder="Enter email"
           :readonly="loading"
         />
       </div>
@@ -37,7 +27,7 @@
         </button>
       </div>
       <div v-else>
-        <button class="btn btn-primary" type="submit" @click="register()">Register</button>
+        <button class="btn btn-primary" type="submit" @click="login()">Login</button>
         <small v-if="status != null" class="status">{{status}}</small>
       </div>
     </form>
@@ -46,24 +36,23 @@
 
 <script>
 export default {
-  name: "RegisterForm",
+  name: "LoginForm",
   data() {
     return {
       status: null,
       loading: false,
       username: "",
-      email: "",
       password: ""
     };
   },
   methods: {
-    register() {}
+    login() {}
   }
 };
 </script>
 
 <style scoped>
-.register-form {
+.login-form {
   padding: 8px;
   margin: auto;
   width: 60%;
