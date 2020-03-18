@@ -1,27 +1,26 @@
 <template>
   <div id="sk-main">
     <div>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <router-link to="/">Starterkit</router-link>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <router-link to="/register">Register</router-link>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <router-link to="/login">Login</router-link>
-            </a>
-          </li>
-        </ul>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <router-link class="navbar-brand" to="/">{{$t("app.starterkit")}}</router-link>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#skNavbarToggle"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="skNavbarToggle">
+          <div class="navbar-nav">
+            <router-link class="nav-item nav-link" to="/settings">{{$t("app.settings")}}</router-link>
+            <router-link class="nav-item nav-link" to="/register">{{$t("app.register")}}</router-link>
+            <router-link class="nav-item nav-link" to="/login">{{$t("app.login")}}</router-link>
+          </div>
+        </div>
       </nav>
     </div>
-    <div>
+    <div class="router-content">
       <router-view></router-view>
     </div>
   </div>
@@ -30,9 +29,14 @@
 <script>
 export default {
   name: "App",
-  data() {}
+  data() {
+    return {};
+  }
 };
 </script>
 
 <style scoped>
+.router-content {
+  padding-top: 16px;
+}
 </style>

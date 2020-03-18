@@ -2,32 +2,25 @@
   <div class="login-form">
     <form>
       <div class="form-group">
-        <label>Username</label>
-        <input
-          class="form-control"
-          v-model="username"
-          placeholder="Enter username"
-          :readonly="loading"
-        />
+        <label>{{$t("components.login.username")}}</label>
+        <input class="form-control" v-model="username" :readonly="loading" />
       </div>
       <div class="form-group">
-        <label>Password</label>
-        <input
-          type="password"
-          class="form-control"
-          v-model="password"
-          placeholder="Enter password"
-          :readonly="loading"
-        />
+        <label>{{$t("components.login.password")}}</label>
+        <input type="password" class="form-control" v-model="password" :readonly="loading" />
       </div>
       <div v-if="loading">
         <button class="btn btn-primary" type="submit" disabled>
           <span class="spinner-border spinner-border-sm" role="status"></span>
-          Loading...
+          {{$t("components.login.loading")}}
         </button>
       </div>
       <div v-else>
-        <button class="btn btn-primary" type="submit" @click="login()">Login</button>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          @click="login()"
+        >{{$t("components.login.login")}}</button>
         <small v-if="status != null" class="status">{{status}}</small>
       </div>
     </form>
