@@ -49,11 +49,16 @@ export default {
     register() {
       this.loading = true;
       register(this.username, this.email, this.password)
-        .then(data => {
+        .then(result => {
           this.status = "OK";
         })
         .catch(ex => {
-          this.status = ex.message;
+          let error = ex.response.data.error;
+          if (error) {
+            this.status = error;
+          } else {
+            this.status = ex.message;
+          }
         })
         .finally(() => {
           this.loading = false;

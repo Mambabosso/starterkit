@@ -2,12 +2,13 @@ import Axios from "axios";
 import registerUrl from "./url";
 
 function register(username, email, password) {
-    const data = {
-        username: username,
-        email: email,
-        password: password
-    };
-    return Axios.post(registerUrl, data);
+    return Axios.post(registerUrl, {
+        "data": {
+            "username": username,
+            "email": email,
+            "password": password
+        }
+    });
 }
 
 export default register;
