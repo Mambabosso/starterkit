@@ -26,7 +26,7 @@ public class RegisterResource {
     @UnitOfWork
     @Path("/new")
     public Response register(DataMap dataMap) {
-        String name = dataMap.tryGet("name", String.class);
+        String name = dataMap.tryGet("username", String.class);
         String mail = dataMap.tryGet("mail", String.class);
         String password = dataMap.tryGet("password", String.class);
         Result<User> user = userService.register(name, mail, password);

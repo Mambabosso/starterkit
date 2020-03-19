@@ -32,19 +32,33 @@
 </template>
 
 <script>
+import register from "./../services/register";
+
 export default {
   name: "RegisterForm",
   data() {
     return {
       status: null,
       loading: false,
-      username: "",
-      email: "",
-      password: ""
+      username: "User1",
+      email: "user@mail.de",
+      password: "123456"
     };
   },
   methods: {
-    register() {}
+    register() {
+      this.loading = true;
+      register(this.username, this.email, this.password)
+        .then(data => {
+          this.status = "OK";
+        })
+        .catch(ex => {
+          this.status = ex.message;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    }
   }
 };
 </script>
