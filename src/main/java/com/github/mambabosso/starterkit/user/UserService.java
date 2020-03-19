@@ -1,10 +1,10 @@
 package com.github.mambabosso.starterkit.user;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
+import com.github.mambabosso.starterkit.util.Helper;
 import com.github.mambabosso.starterkit.util.Result;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public final class UserService {
 
@@ -20,6 +20,9 @@ public final class UserService {
         try {
             if (name == null || name.trim().isEmpty()) {
                 return Result.failure("name can not be null or empty");
+            }
+            if (Helper.containsWhitespace(name)) {
+                return Result.failure("name can not contain whitespaces");
             }
             if (mail != null && !mail.contains("@")) {
                 return Result.failure("mail does not contain @");

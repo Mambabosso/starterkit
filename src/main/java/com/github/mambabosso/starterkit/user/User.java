@@ -52,7 +52,7 @@ public final class User implements Principal, Serializable {
         Objects.requireNonNull(plain_password);
         User user = new User();
         user.setName(name);
-        user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(12)));
+        user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(14)));
         return user;
     }
 
