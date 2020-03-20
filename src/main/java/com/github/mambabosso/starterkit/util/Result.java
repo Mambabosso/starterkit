@@ -2,6 +2,7 @@ package com.github.mambabosso.starterkit.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.mambabosso.starterkit.error.ErrorCode;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -19,7 +20,7 @@ public final class Result<T extends Serializable> implements Serializable {
     private T value;
 
     @JsonProperty
-    private String error;
+    private ErrorCode error;
 
     private Result() {
     }
@@ -39,7 +40,7 @@ public final class Result<T extends Serializable> implements Serializable {
         return result;
     }
 
-    public static <T extends Serializable> Result<T> failure(final String error) {
+    public static <T extends Serializable> Result<T> failure(final ErrorCode error) {
         Objects.requireNonNull(error);
         Result<T> result = new Result<>();
         result.setSuccess(false);

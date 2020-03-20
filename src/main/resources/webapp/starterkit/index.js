@@ -6,7 +6,6 @@ import App from "./App.vue";
 
 import VueI18n from "./i18n/index";
 
-import "./components/index";
 import Router from "./router/router";
 
 

@@ -20,7 +20,7 @@ public final class UserDAO extends GenericDAO<User> {
         if (user.getId().equals(id)) {
             return user;
         }
-        throw new Exception("user id does not equal created id");
+        throw new Exception();
     }
 
     public Optional<User> getUserByName(String name) {

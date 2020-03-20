@@ -1,6 +1,7 @@
 package com.github.mambabosso.starterkit.user;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
+import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.util.Helper;
 import com.github.mambabosso.starterkit.util.Result;
 
@@ -19,23 +20,23 @@ public final class UserService {
     public Result<User> register(String name, String mail, String password) {
         try {
             if (name == null || name.trim().isEmpty()) {
-                return Result.failure("name can not be null or empty");
+                return Result.failure(Errors.INVALID_NAME);
             }
             if (Helper.containsWhitespace(name)) {
-                return Result.failure("name can not contain whitespaces");
+                return Result.failure(Errors.NAME_CONTAINS_WHITESPACE);
             }
-            if (mail != null && !mail.contains("@")) {
-                return Result.failure("mail does not contain @");
+            if (mail != null && !Helper.isValidMail(mail)) {
+                return Result.failure(Errors.MAIL_VALIDATION_FAIL);
             }
             if (password == null || password.trim().isEmpty()) {
-                return Result.failure("password can not be null or empty");
+                return Result.failure(Errors.INVALID_PASSWORD);
             }
             if (userDAO.getUserByName(name).isPresent()) {
-                return Result.failure("name is already taken");
+                return Result.failure(Errors.NAME_ALREADY_TAKEN);
             }
             return Result.success(userDAO.create(name, mail, password));
         } catch (Exception ex) {
-            return Result.failure(ex.getMessage());
+            return Result.failure(Errors.UNKNOWN);
         }
     }
 

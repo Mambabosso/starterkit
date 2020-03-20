@@ -55,7 +55,7 @@ export default {
         .catch(ex => {
           let error = ex.response.data.error;
           if (error) {
-            this.status = error;
+            this.status = this.$t("error." + error.code);
           } else {
             this.status = ex.message;
           }
