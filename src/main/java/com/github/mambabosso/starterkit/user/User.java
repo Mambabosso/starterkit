@@ -32,7 +32,7 @@ public final class User implements Principal, Serializable {
 
     @JsonIgnore
     @NotNull
-    @Column(name = "Password")
+    @Column(name = "Password_Hash")
     private String password;
 
     @JsonIgnore
