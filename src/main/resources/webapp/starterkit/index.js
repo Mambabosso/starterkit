@@ -18,3 +18,4 @@ const v = new Vue({
     render: h => h(App)
 });
 
+export default v;

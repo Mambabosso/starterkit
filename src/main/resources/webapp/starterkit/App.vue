@@ -2,7 +2,11 @@
   <div id="sk-main">
     <div>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <router-link class="navbar-brand" to="/">{{$t("app.starterkit")}}</router-link>
+
+        <router-link class="navbar-brand" to="/">{{
+          $t("app.starterkit")
+        }}</router-link>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -11,13 +15,25 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="skNavbarToggle">
           <div class="navbar-nav">
-            <router-link class="nav-item nav-link" to="/settings">{{$t("app.settings")}}</router-link>
-            <router-link class="nav-item nav-link" to="/register">{{$t("app.register")}}</router-link>
-            <router-link class="nav-item nav-link" to="/login">{{$t("app.login")}}</router-link>
+
+            <router-link class="nav-item nav-link" to="/settings">{{
+              $t("app.settings")
+            }}</router-link>
+
+            <router-link class="nav-item nav-link" to="/register">{{
+              $t("app.register")
+            }}</router-link>
+
+            <router-link class="nav-item nav-link" to="/login">{{
+              $t("app.login")
+            }}</router-link>
+
           </div>
         </div>
+        
       </nav>
     </div>
     <div class="router-content">
