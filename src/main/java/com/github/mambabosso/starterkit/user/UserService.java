@@ -2,8 +2,8 @@ package com.github.mambabosso.starterkit.user;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;
-import com.github.mambabosso.starterkit.util.Helper;
 import com.github.mambabosso.starterkit.util.Result;
+import com.github.mambabosso.starterkit.util.Validator;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -23,13 +23,13 @@ public final class UserService {
             if (name == null || name.trim().isEmpty()) {
                 return Result.failure(Errors.INVALID_NAME);
             }
-            if (!Helper.isValidName(name)) {
+            if (!Validator.isValidName(name)) {
                 return Result.failure(Errors.NAME_VALIDATION_FAIL);
             }
             if (mail == null || mail.trim().isEmpty()) {
                 return Result.failure(Errors.INVALID_MAIL);
             }
-            if (!Helper.isValidMail(mail)) {
+            if (!Validator.isValidMail(mail)) {
                 return Result.failure(Errors.MAIL_VALIDATION_FAIL);
             }
             if (password == null || password.trim().isEmpty()) {
