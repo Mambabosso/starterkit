@@ -4,7 +4,7 @@ export default {
         "103": "Name nicht moeglich",
         "104": "Email nicht moeglich",
         "105": "Passwort nicht moeglich",
-        "1001": "Falsche Namen struktur (keine leerzeichen)",
+        "1001": "Falsche Namen struktur",
         "1002": "Falsche Email struktur",
         "1003": "Name bereits vergeben",
         "1004": "Mail bereits vergeben"

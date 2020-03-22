@@ -4,7 +4,7 @@ export default {
         "103": "Invalid name",
         "104": "Invalid email",
         "105": "Invalid password",
-        "1001": "Invalid name structure (no whitespace)",
+        "1001": "Invalid name structure",
         "1002": "Invalid email structure",
         "1003": "Name already taken",
         "1004": "Mail already taken"
