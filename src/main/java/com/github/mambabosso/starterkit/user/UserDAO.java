@@ -27,4 +27,8 @@ public final class UserDAO extends GenericDAO<User> {
         return Optional.ofNullable(query().select(user).from(user).where(user.name.eq(name)).fetchFirst());
     }
 
+    public Optional<User> getUserByMail(String mail) {
+        return Optional.ofNullable(query().select(user).from(user).where(user.mail.eq(mail)).fetchFirst());
+    }
+
 }

@@ -30,7 +30,7 @@ public final class User implements Principal, Serializable {
     @Column(name = "Name", unique = true)
     private String name;
 
-    @Column(name = "Mail")
+    @Column(name = "Mail", unique = true)
     private String mail;
 
     @JsonIgnore

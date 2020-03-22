@@ -36,15 +36,4 @@ public class RegisterResource {
         return Response.status(400).entity(user).build();
     }
 
-    /*@GET
-    @UnitOfWork
-    @Path("/new/create")
-    public Response register(@QueryParam("name") String name, @QueryParam("mail") String mail, @QueryParam("password") String password) {
-        Result<User> user = userService.register(name, mail, password);
-        if (user.isSuccess()) {
-            return Response.ok(user).build();
-        }
-        return Response.status(400).entity(user).build();
-    }*/
-
 }

@@ -5,6 +5,7 @@ import com.github.mambabosso.starterkit.auth.UserAuthenticator;
 import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
 import com.github.mambabosso.starterkit.resources.RegisterResource;
+import com.github.mambabosso.starterkit.resources.UserResource;
 import com.github.mambabosso.starterkit.user.User;
 import com.github.mambabosso.starterkit.user.UserDAO;
 import com.github.mambabosso.starterkit.user.UserService;
@@ -97,6 +98,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
 
     private void registerResources() {
         environment.jersey().register(new RegisterResource(userService));
+        environment.jersey().register(new UserResource(userService));
     }
 
 }
