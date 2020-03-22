@@ -2,7 +2,9 @@ package com.github.mambabosso.starterkit.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -17,6 +19,7 @@ import java.util.Objects;
 @Table(name = "User")
 public final class User implements Principal, Serializable {
 
+    @Setter(AccessLevel.NONE)
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

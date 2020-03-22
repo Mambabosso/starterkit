@@ -1,5 +1,6 @@
 package com.github.mambabosso.starterkit;
 
+import com.github.mambabosso.starterkit.auth.AuthHelper;
 import com.github.mambabosso.starterkit.auth.UserAuthenticator;
 import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
@@ -80,6 +81,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerAuth() {
+        AuthHelper.setSessionFactory(hibernateBundle.getSessionFactory());
         BasicCredentialAuthFilter.Builder<User> builder = new BasicCredentialAuthFilter.Builder<>();
         builder.setAuthenticator(new UserAuthenticator());
         builder.setAuthorizer(new UserAuthorizer());
