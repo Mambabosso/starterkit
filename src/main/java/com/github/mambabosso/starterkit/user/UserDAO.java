@@ -14,8 +14,7 @@ public final class UserDAO extends GenericDAO<User> {
     }
 
     public User create(String name, String mail, String password) throws Exception {
-        User user = User.create(name, password);
-        user.setMail(mail);
+        User user = User.create(name, mail, password);
         Long id = (Long)create(user);
         if (user.getId().equals(id)) {
             return user;

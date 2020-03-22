@@ -54,9 +54,9 @@ export default {
     return {
       status: null,
       loading: false,
-      username: "User1",
-      email: "user@mail.de",
-      password: "123456"
+      username: "",
+      email: "",
+      password: ""
     };
   },
   methods: {

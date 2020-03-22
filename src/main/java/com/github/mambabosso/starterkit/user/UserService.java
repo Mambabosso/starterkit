@@ -23,10 +23,13 @@ public final class UserService {
             if (name == null || name.trim().isEmpty()) {
                 return Result.failure(Errors.INVALID_NAME);
             }
-            if (Helper.containsWhitespace(name)) {
-                return Result.failure(Errors.NAME_CONTAINS_WHITESPACE);
+            if (!Helper.isValidName(name)) {
+                return Result.failure(Errors.NAME_VALIDATION_FAIL);
             }
-            if (mail != null && !Helper.isValidMail(mail)) {
+            if (mail == null || mail.trim().isEmpty()) {
+                return Result.failure(Errors.INVALID_MAIL);
+            }
+            if (!Helper.isValidMail(mail)) {
                 return Result.failure(Errors.MAIL_VALIDATION_FAIL);
             }
             if (password == null || password.trim().isEmpty()) {
@@ -34,6 +37,9 @@ public final class UserService {
             }
             if (userDAO.getUserByName(name).isPresent()) {
                 return Result.failure(Errors.NAME_ALREADY_TAKEN);
+            }
+            if (userDAO.getUserByMail(mail).isPresent()) {
+                return Result.failure(Errors.MAIL_ALREADY_TAKEN);
             }
             return Result.success(userDAO.create(name, mail, password));
         } catch (Exception ex) {

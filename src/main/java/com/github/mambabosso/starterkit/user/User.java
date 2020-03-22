@@ -30,6 +30,7 @@ public final class User implements Principal, Serializable {
     @Column(name = "Name", unique = true)
     private String name;
 
+    @NotNull
     @Column(name = "Mail", unique = true)
     private String mail;
 
@@ -50,11 +51,13 @@ public final class User implements Principal, Serializable {
         return name;
     }
 
-    public static User create(String name, String plain_password) {
+    public static User create(String name, String mail, String plain_password) {
         Objects.requireNonNull(name);
+        Objects.requireNonNull(mail);
         Objects.requireNonNull(plain_password);
         User user = new User();
         user.setName(name);
+        user.setMail(mail);
         user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(14)));
         return user;
     }

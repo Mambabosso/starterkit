@@ -2,10 +2,12 @@ export default {
     "error": {
         "0": "Unbekannter Fehler",
         "103": "Name nicht moeglich",
+        "104": "Email nicht moeglich",
         "105": "Passwort nicht moeglich",
-        "201": "Name darf keine leeren Zeichen enthalten",
-        "1001": "Falsche Email struktur",
-        "1002": "Name bereits vergeben"
+        "1001": "Falsche Namen struktur (keine leerzeichen)",
+        "1002": "Falsche Email struktur",
+        "1003": "Name bereits vergeben",
+        "1004": "Mail bereits vergeben"
     },
     "app": {
         "starterkit": "Starterkit",

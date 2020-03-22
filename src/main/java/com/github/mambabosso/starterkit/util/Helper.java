@@ -13,6 +13,10 @@ public final class Helper {
         return false;
     }
 
+    public static boolean isValidName(String name) {
+        return !containsWhitespace(name);
+    }
+
     public static boolean isValidMail(String mail) {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
