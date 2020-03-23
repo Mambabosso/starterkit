@@ -35,4 +35,12 @@ public final class UserDAO extends GenericDAO<User> {
         return query(offset, limit).select(user).from(user).fetch();
     }
 
+    public List<User> findByName(long offset, long limit, String name) {
+        return query(offset, limit).select(user).from(user).where(user.name.containsIgnoreCase(name)).fetch();
+    }
+
+    public List<User> findByMail(long offset, long limit, String mail) {
+        return query(offset, limit).select(user).from(user).where(user.mail.containsIgnoreCase(mail)).fetch();
+    }
+
 }

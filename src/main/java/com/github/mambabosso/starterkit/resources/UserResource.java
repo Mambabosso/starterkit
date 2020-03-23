@@ -1,5 +1,6 @@
 package com.github.mambabosso.starterkit.resources;
 
+import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.user.User;
 import com.github.mambabosso.starterkit.user.UserService;
 import com.github.mambabosso.starterkit.util.Result;
@@ -30,6 +31,27 @@ public class UserResource {
     @Path("/get")
     public Response get(@Auth User user, @QueryParam("offset") long offset, @QueryParam("limit") long limit) {
         Result<List<User>> list = userService.getAll(offset, limit);
+        if (list.isSuccess()) {
+            return Response.ok(list).build();
+        }
+        return Response.status(400).entity(list).build();
+    }
+
+    @GET
+    @RolesAllowed("5")
+    @UnitOfWork
+    @Path("/find")
+    public Response find(@Auth User user, @QueryParam("offset") long offset, @QueryParam("limit") long limit, @QueryParam("name") String name, @QueryParam("mail") String mail) {
+        if (name != null && mail != null) {
+            return Response.status(400).build();
+        }
+        Result<List<User>> list = Result.failure(Errors.UNKNOWN);
+        if (name != null) {
+            list = userService.findByName(offset, limit, name);
+        }
+        if (mail != null) {
+            list = userService.findByMail(offset, limit, mail);
+        }
         if (list.isSuccess()) {
             return Response.ok(list).build();
         }

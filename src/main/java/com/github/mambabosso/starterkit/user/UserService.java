@@ -74,4 +74,26 @@ public final class UserService {
         }
     }
 
+    public Result<List<User>> findByName(long offset, long limit, String name) {
+        try {
+            if (name == null || name.trim().isEmpty()) {
+                return Result.failure(Errors.INVALID_NAME);
+            }
+            return Result.success(userDAO.findByName(offset, limit, name));
+        } catch (Exception ex) {
+            return Result.failure(Errors.UNKNOWN);
+        }
+    }
+
+    public Result<List<User>> findByMail(long offset, long limit, String mail) {
+        try {
+            if (mail == null || mail.trim().isEmpty()) {
+                return Result.failure(Errors.INVALID_MAIL);
+            }
+            return Result.success(userDAO.findByMail(offset, limit, mail));
+        } catch (Exception ex) {
+            return Result.failure(Errors.UNKNOWN);
+        }
+    }
+
 }
