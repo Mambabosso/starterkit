@@ -2,6 +2,7 @@ package com.github.mambabosso.starterkit.auth;
 
 import com.github.mambabosso.starterkit.user.QUser;
 import com.github.mambabosso.starterkit.user.User;
+import com.github.mambabosso.starterkit.util.Helper;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -42,8 +43,10 @@ public final class AuthHelper {
         return getUser(name, plain_password);
     }
 
-    public static boolean authorize(User user, String role, @Nullable ContainerRequestContext requestContext) {
-        return false;
+    public static boolean authorize(User user, String roleLevel, @Nullable ContainerRequestContext requestContext) {
+        int level = Helper.toInteger(user.getRoleLevel());
+        int neededLevel = Helper.toInteger(roleLevel);
+        return neededLevel > 0 && level >= neededLevel;
     }
 
 }

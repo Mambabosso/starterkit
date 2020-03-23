@@ -9,13 +9,13 @@ import javax.ws.rs.container.ContainerRequestContext;
 public final class UserAuthorizer implements Authorizer<User> {
 
     @Override
-    public boolean authorize(User user, String role, @Nullable ContainerRequestContext requestContext) {
-        return AuthHelper.authorize(user, role, requestContext);
+    public boolean authorize(User user, String roleLevel, @Nullable ContainerRequestContext requestContext) {
+        return AuthHelper.authorize(user, roleLevel, requestContext);
     }
 
     @Override
-    public boolean authorize(User user, String role) {
-        return authorize(user, role, null);
+    public boolean authorize(User user, String roleLevel) {
+        return authorize(user, roleLevel, null);
     }
 
 }

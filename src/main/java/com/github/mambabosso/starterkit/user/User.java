@@ -40,6 +40,11 @@ public final class User implements Principal, Serializable {
     private String password;
 
     @JsonIgnore
+    @NotNull
+    @Column(name = "Role_Level", length = 4)
+    private String roleLevel;
+
+    @JsonIgnore
     @Column(name = "Token")
     private String token;
 
@@ -59,6 +64,7 @@ public final class User implements Principal, Serializable {
         user.setName(name);
         user.setMail(mail);
         user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(14)));
+        user.setRoleLevel("1");
         return user;
     }
 

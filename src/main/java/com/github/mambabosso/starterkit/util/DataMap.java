@@ -15,7 +15,7 @@ public final class DataMap implements Serializable {
     public DataMap() {
     }
 
-    public <T extends Serializable> T tryGet(String key, Class<T> c) {
+    public <T extends Serializable> T tryGet(final String key, final Class<T> c) {
         if (key != null && !key.isEmpty() && dataMap != null && dataMap.containsKey(key)) {
             return c.cast(dataMap.get(key));
         }
@@ -26,7 +26,7 @@ public final class DataMap implements Serializable {
         return dataMap;
     }
 
-    public void setDataMap(Map<String, Serializable> dataMap) {
+    public void setDataMap(final Map<String, Serializable> dataMap) {
         this.dataMap = Objects.requireNonNull(dataMap);
     }
 
