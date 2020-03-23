@@ -41,8 +41,8 @@ public final class User implements Principal, Serializable {
 
     @JsonIgnore
     @NotNull
-    @Column(name = "Role_Level", length = 4)
-    private String roleLevel;
+    @Column(name = "Role_Level")
+    private int roleLevel;
 
     @JsonIgnore
     @Column(name = "Token")
@@ -64,7 +64,7 @@ public final class User implements Principal, Serializable {
         user.setName(name);
         user.setMail(mail);
         user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(14)));
-        user.setRoleLevel("1");
+        user.setRoleLevel(1);
         return user;
     }
 

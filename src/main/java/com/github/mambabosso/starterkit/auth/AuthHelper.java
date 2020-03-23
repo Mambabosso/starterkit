@@ -44,7 +44,7 @@ public final class AuthHelper {
     }
 
     public static boolean authorize(User user, String roleLevel, @Nullable ContainerRequestContext requestContext) {
-        int level = Helper.toInteger(user.getRoleLevel());
+        int level = user.getRoleLevel();
         int neededLevel = Helper.toInteger(roleLevel);
         return neededLevel > 0 && level >= neededLevel;
     }

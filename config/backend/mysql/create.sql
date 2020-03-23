@@ -3,7 +3,7 @@ CREATE TABLE user (
     name VARCHAR(64) NOT NULL UNIQUE,
     mail VARCHAR(64) NOT NULL UNIQUE,
     password_hash VARCHAR(64) NOT NULL,
-    role_level VARCHAR(4) NOT NULL,
+    role_level INT NOT NULL,
     token VARCHAR(64),
     PRIMARY KEY (user_id)
 );
