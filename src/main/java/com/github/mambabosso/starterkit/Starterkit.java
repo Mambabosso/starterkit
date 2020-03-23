@@ -1,6 +1,5 @@
 package com.github.mambabosso.starterkit;
 
-import com.github.mambabosso.starterkit.auth.AuthHelper;
 import com.github.mambabosso.starterkit.auth.UserAuthenticator;
 import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
@@ -78,14 +77,13 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerHealthChecks() {
-        environment.healthChecks().register("DatabaseHealthCheck", new DatabaseHealthCheck());
+        environment.healthChecks().register("database", new DatabaseHealthCheck(hibernateBundle.getSessionFactory()));
     }
 
     private void registerAuth() {
-        AuthHelper.setSessionFactory(hibernateBundle.getSessionFactory());
         BasicCredentialAuthFilter.Builder<User> builder = new BasicCredentialAuthFilter.Builder<>();
-        builder.setAuthenticator(new UserAuthenticator());
-        builder.setAuthorizer(new UserAuthorizer());
+        builder.setAuthenticator(new UserAuthenticator(hibernateBundle.getSessionFactory()));
+        builder.setAuthorizer(new UserAuthorizer(hibernateBundle.getSessionFactory()));
         builder.setRealm("Starterkit Realm");
         environment.jersey().register(new AuthDynamicFeature(builder.buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
