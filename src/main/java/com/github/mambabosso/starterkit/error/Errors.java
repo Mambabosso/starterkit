@@ -15,8 +15,10 @@ public final class Errors {
     // register
     public static final ErrorCode NAME_VALIDATION_FAIL = ErrorCode.create(1001);
     public static final ErrorCode MAIL_VALIDATION_FAIL = ErrorCode.create(1002);
-    public static final ErrorCode NAME_ALREADY_TAKEN = ErrorCode.create(1003);
-    public static final ErrorCode MAIL_ALREADY_TAKEN = ErrorCode.create(1004);
+    public static final ErrorCode PASSWORD_VALIDATION_FAIL = ErrorCode.create(1003);
+
+    public static final ErrorCode NAME_ALREADY_TAKEN = ErrorCode.create(1010);
+    public static final ErrorCode MAIL_ALREADY_TAKEN = ErrorCode.create(1011);
 
 
 }

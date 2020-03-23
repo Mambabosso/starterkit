@@ -20,20 +20,14 @@ public final class UserService {
 
     public Result<User> register(String name, String mail, String password) {
         try {
-            if (name == null || name.trim().isEmpty()) {
-                return Result.failure(Errors.INVALID_NAME);
-            }
-            if (!Validator.isValidName(name)) {
+            if (name == null || name.trim().isEmpty() || !Validator.isValidName(name)) {
                 return Result.failure(Errors.NAME_VALIDATION_FAIL);
             }
-            if (mail == null || mail.trim().isEmpty()) {
-                return Result.failure(Errors.INVALID_MAIL);
-            }
-            if (!Validator.isValidMail(mail)) {
+            if (mail == null || mail.trim().isEmpty() || !Validator.isValidMail(mail)) {
                 return Result.failure(Errors.MAIL_VALIDATION_FAIL);
             }
-            if (password == null || password.trim().isEmpty()) {
-                return Result.failure(Errors.INVALID_PASSWORD);
+            if (password == null || password.trim().isEmpty() || !Validator.isValidPassword(password)) {
+                return Result.failure(Errors.PASSWORD_VALIDATION_FAIL);
             }
             if (userDAO.getUserByName(name).isPresent()) {
                 return Result.failure(Errors.NAME_ALREADY_TAKEN);

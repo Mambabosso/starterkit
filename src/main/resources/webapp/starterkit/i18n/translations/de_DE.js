@@ -6,8 +6,9 @@ export default {
         "105": "Passwort nicht moeglich",
         "1001": "Falsche Namen struktur",
         "1002": "Falsche Email struktur",
-        "1003": "Name bereits vergeben",
-        "1004": "Mail bereits vergeben"
+        "1003": "Falsche Passwort struktur",
+        "1010": "Name bereits vergeben",
+        "1011": "Mail bereits vergeben"
     },
     "app": {
         "starterkit": "Starterkit",

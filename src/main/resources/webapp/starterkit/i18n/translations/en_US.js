@@ -6,8 +6,9 @@ export default {
         "105": "Invalid password",
         "1001": "Invalid name structure",
         "1002": "Invalid email structure",
-        "1003": "Name already taken",
-        "1004": "Mail already taken"
+        "1003": "Invalid password structure",
+        "1010": "Name already taken",
+        "1011": "Mail already taken"
     },
     "app": {
         "starterkit": "Starterkit",
