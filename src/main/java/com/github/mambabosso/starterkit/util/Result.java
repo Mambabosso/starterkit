@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public final class Result<T extends Serializable> implements Serializable {
+public final class Result<T> implements Serializable {
 
     @JsonProperty
     private boolean success;
@@ -32,7 +32,7 @@ public final class Result<T extends Serializable> implements Serializable {
         return Optional.empty();
     }
 
-    public static <T extends Serializable> Result<T> success(final T value) {
+    public static <T> Result<T> success(final T value) {
         Objects.requireNonNull(value);
         Result<T> result = new Result<>();
         result.setSuccess(true);
@@ -40,7 +40,7 @@ public final class Result<T extends Serializable> implements Serializable {
         return result;
     }
 
-    public static <T extends Serializable> Result<T> failure(final ErrorCode error) {
+    public static <T> Result<T> failure(final ErrorCode error) {
         Objects.requireNonNull(error);
         Result<T> result = new Result<>();
         result.setSuccess(false);

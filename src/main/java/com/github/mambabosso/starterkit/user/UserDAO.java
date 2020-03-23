@@ -3,6 +3,7 @@ package com.github.mambabosso.starterkit.user;
 import com.github.mambabosso.starterkit.dao.GenericDAO;
 import org.hibernate.SessionFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 public final class UserDAO extends GenericDAO<User> {
@@ -28,6 +29,10 @@ public final class UserDAO extends GenericDAO<User> {
 
     public Optional<User> getUserByMail(String mail) {
         return Optional.ofNullable(query().select(user).from(user).where(user.mail.eq(mail)).fetchFirst());
+    }
+
+    public List<User> getAll(long offset, long limit) {
+        return query(offset, limit).select(user).from(user).fetch();
     }
 
 }

@@ -5,6 +5,7 @@ import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.util.Result;
 import com.github.mambabosso.starterkit.util.Validator;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -60,6 +61,14 @@ public final class UserService {
             }
             Optional<User> user = userDAO.getUserByMail(mail);
             return user.map(Result::success).orElseGet(() -> Result.failure(Errors.INVALID_MAIL));
+        } catch (Exception ex) {
+            return Result.failure(Errors.UNKNOWN);
+        }
+    }
+
+    public Result<List<User>> getAll(long offset, long limit) {
+        try {
+            return Result.success(userDAO.getAll(offset, limit));
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
         }

@@ -16,36 +16,36 @@ import java.util.Objects;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public final class User implements Principal, Serializable {
 
     @Setter(AccessLevel.NONE)
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "User_Id")
+    @Column(name = "user_id")
     private Long id;
 
     @NotNull
-    @Column(name = "Name", unique = true)
+    @Column(name = "name", unique = true)
     private String name;
 
     @NotNull
-    @Column(name = "Mail", unique = true)
+    @Column(name = "mail", unique = true)
     private String mail;
 
     @JsonIgnore
     @NotNull
-    @Column(name = "Password_Hash")
+    @Column(name = "password_hash")
     private String password;
 
     @JsonIgnore
     @NotNull
-    @Column(name = "Role_Level")
+    @Column(name = "role_level")
     private int roleLevel;
 
     @JsonIgnore
-    @Column(name = "Token")
+    @Column(name = "token")
     private String token;
 
     private User() {
