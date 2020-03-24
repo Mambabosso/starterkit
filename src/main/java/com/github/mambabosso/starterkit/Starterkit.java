@@ -6,6 +6,8 @@ import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
 import com.github.mambabosso.starterkit.resources.RegisterResource;
 import com.github.mambabosso.starterkit.resources.UserResource;
 import com.github.mambabosso.starterkit.role.Role;
+import com.github.mambabosso.starterkit.role.RoleDAO;
+import com.github.mambabosso.starterkit.role.RoleService;
 import com.github.mambabosso.starterkit.user.User;
 import com.github.mambabosso.starterkit.user.UserDAO;
 import com.github.mambabosso.starterkit.user.UserService;
@@ -36,6 +38,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
 
     private HibernateBundle<StarterkitConfiguration> hibernateBundle;
     private UserService userService;
+    private RoleService roleService;
 
     private HibernateBundle<StarterkitConfiguration> createHibernateBundle(Class<?> c, Class<?> ...classes) {
         return new HibernateBundle<StarterkitConfiguration>(c, classes) {
@@ -93,6 +96,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
 
     private void createDAOServices() {
         userService = new UserService(configuration, new UserDAO(hibernateBundle.getSessionFactory()));
+        roleService = new RoleService(configuration, new RoleDAO(hibernateBundle.getSessionFactory()));
     }
 
     private void registerResources() {
