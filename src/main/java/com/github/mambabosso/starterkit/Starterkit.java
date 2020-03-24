@@ -5,6 +5,7 @@ import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
 import com.github.mambabosso.starterkit.resources.RegisterResource;
 import com.github.mambabosso.starterkit.resources.UserResource;
+import com.github.mambabosso.starterkit.role.Role;
 import com.github.mambabosso.starterkit.user.User;
 import com.github.mambabosso.starterkit.user.UserDAO;
 import com.github.mambabosso.starterkit.user.UserService;
@@ -68,7 +69,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerHibernateBundle() {
-        hibernateBundle = createHibernateBundle(User.class);
+        hibernateBundle = createHibernateBundle(User.class, Role.class);
         bootstrap.addBundle(hibernateBundle);
     }
 

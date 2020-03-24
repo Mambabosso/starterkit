@@ -2,6 +2,7 @@ package com.github.mambabosso.starterkit.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.mambabosso.starterkit.role.Role;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -40,9 +42,9 @@ public final class User implements Principal, Serializable {
     private String password;
 
     @JsonIgnore
-    @NotNull
-    @Column(name = "role_level")
-    private int roleLevel;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user"), inverseJoinColumns = @JoinColumn(name = "role"))
+    private Set<Role> roles;
 
     @JsonIgnore
     @Column(name = "token")
@@ -64,7 +66,6 @@ public final class User implements Principal, Serializable {
         user.setName(name);
         user.setMail(mail);
         user.setPassword(BCrypt.hashpw(plain_password, BCrypt.gensalt(14)));
-        user.setRoleLevel(1);
         return user;
     }
 

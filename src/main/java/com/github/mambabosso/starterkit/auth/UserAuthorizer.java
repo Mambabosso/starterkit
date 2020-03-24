@@ -18,15 +18,13 @@ public final class UserAuthorizer implements Authorizer<User> {
     }
 
     @Override
-    public boolean authorize(User user, String roleLevel, @Nullable ContainerRequestContext requestContext) {
-        int level = user.getRoleLevel();
-        int neededLevel = Helper.toInteger(roleLevel);
-        return neededLevel > 0 && level >= neededLevel;
+    public boolean authorize(User user, String role, @Nullable ContainerRequestContext requestContext) {
+        return user.getRoles().stream().anyMatch(r -> r.getName().contentEquals(role));
     }
 
     @Override
-    public boolean authorize(User user, String roleLevel) {
-        return authorize(user, roleLevel, null);
+    public boolean authorize(User user, String role) {
+        return authorize(user, role, null);
     }
 
 }
