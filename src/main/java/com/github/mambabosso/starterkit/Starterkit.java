@@ -99,7 +99,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     private void registerAuth() {
         OAuthCredentialAuthFilter.Builder<User> builder = new OAuthCredentialAuthFilter.Builder<>();
         builder.setAuthenticator(new UnitOfWorkAwareProxyFactory(hibernateBundle).create(UserAuthenticator.class, TokenDAO.class, tokenService.getTokenDAO()));
-        builder.setAuthorizer(new UserAuthorizer(userService));
+        builder.setAuthorizer(new UserAuthorizer());
         builder.setPrefix("Bearer");
         environment.jersey().register(new AuthDynamicFeature(builder.buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
