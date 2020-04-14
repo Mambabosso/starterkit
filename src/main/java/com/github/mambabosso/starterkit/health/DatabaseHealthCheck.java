@@ -15,7 +15,7 @@ public final class DatabaseHealthCheck extends HealthCheck {
     }
 
     private Result databaseAvailable() {
-        if (sessionFactory != null && sessionFactory.isOpen()) {
+        if (sessionFactory.isOpen()) {
             try (Session session = sessionFactory.openSession()) {
                 if (session.createNativeQuery("select 1 from dual;").getSingleResult() != null) {
                     return Result.healthy();

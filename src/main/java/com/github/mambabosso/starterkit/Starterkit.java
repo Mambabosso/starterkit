@@ -62,8 +62,8 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
         this.configuration = starterkitConfiguration;
         setUrlPattern();
         registerHealthChecks();
-        registerAuth();
         createDAOServices();
+        registerAuth();
         registerResources();
     }
 
@@ -84,6 +84,11 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
         environment.healthChecks().register("database", new DatabaseHealthCheck(hibernateBundle.getSessionFactory()));
     }
 
+    private void createDAOServices() {
+        userService = new UserService(configuration, new UserDAO(hibernateBundle.getSessionFactory()));
+        roleService = new RoleService(configuration, new RoleDAO(hibernateBundle.getSessionFactory()));
+    }
+
     private void registerAuth() {
         OAuthCredentialAuthFilter.Builder<User> builder = new OAuthCredentialAuthFilter.Builder<>();
         builder.setAuthenticator(new UserAuthenticator(userService));
@@ -92,11 +97,6 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
         environment.jersey().register(new AuthDynamicFeature(builder.buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
-    }
-
-    private void createDAOServices() {
-        userService = new UserService(configuration, new UserDAO(hibernateBundle.getSessionFactory()));
-        roleService = new RoleService(configuration, new RoleDAO(hibernateBundle.getSessionFactory()));
     }
 
     private void registerResources() {
