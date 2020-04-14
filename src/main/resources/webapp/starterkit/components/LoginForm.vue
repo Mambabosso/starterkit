@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <form>
-
+      
       <div class="form-group">
         <label>{{ $t("components.login.username") }}</label>
         <input class="form-control" v-model="username" :readonly="loading" />
@@ -30,12 +30,14 @@
         </button>
         <small v-if="status != null" class="status">{{ status }}</small>
       </div>
-      
+
     </form>
   </div>
 </template>
 
 <script>
+import login from "./../services/login";
+
 export default {
   name: "LoginForm",
   data() {
@@ -43,11 +45,30 @@ export default {
       status: null,
       loading: false,
       username: "",
-      password: ""
+      password: "",
+      token: ""
     };
   },
   methods: {
-    login() {}
+    login() {
+      this.loading = true;
+      login(this.username, this.password)
+        .then(result => {
+          this.token = result.data.value.value;
+          this.status = "OK";
+        })
+        .catch(ex => {
+          let error = ex.response.data.error;
+          if (error) {
+            this.status = this.$t("error." + error.code);
+          } else {
+            this.status = ex.message;
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    }
   }
 };
 </script>

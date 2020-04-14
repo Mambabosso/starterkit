@@ -3,6 +3,10 @@ package com.github.mambabosso.starterkit;
 import com.github.mambabosso.starterkit.auth.UserAuthenticator;
 import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
+import com.github.mambabosso.starterkit.model.token.Token;
+import com.github.mambabosso.starterkit.model.token.TokenDAO;
+import com.github.mambabosso.starterkit.model.token.TokenService;
+import com.github.mambabosso.starterkit.resources.AuthResource;
 import com.github.mambabosso.starterkit.resources.RegisterResource;
 import com.github.mambabosso.starterkit.resources.UserResource;
 import com.github.mambabosso.starterkit.model.role.Role;
@@ -18,6 +22,7 @@ import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
@@ -39,6 +44,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     private HibernateBundle<StarterkitConfiguration> hibernateBundle;
     private UserService userService;
     private RoleService roleService;
+    private TokenService tokenService;
 
     private HibernateBundle<StarterkitConfiguration> createHibernateBundle(Class<?> c, Class<?> ...classes) {
         return new HibernateBundle<StarterkitConfiguration>(c, classes) {
@@ -72,7 +78,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerHibernateBundle() {
-        hibernateBundle = createHibernateBundle(User.class, Role.class);
+        hibernateBundle = createHibernateBundle(User.class, Role.class, Token.class);
         bootstrap.addBundle(hibernateBundle);
     }
 
@@ -87,11 +93,12 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     private void createDAOServices() {
         userService = new UserService(configuration, new UserDAO(hibernateBundle.getSessionFactory()));
         roleService = new RoleService(configuration, new RoleDAO(hibernateBundle.getSessionFactory()));
+        tokenService = new TokenService(configuration, new TokenDAO(hibernateBundle.getSessionFactory()));
     }
 
     private void registerAuth() {
         OAuthCredentialAuthFilter.Builder<User> builder = new OAuthCredentialAuthFilter.Builder<>();
-        builder.setAuthenticator(new UserAuthenticator(userService));
+        builder.setAuthenticator(new UnitOfWorkAwareProxyFactory(hibernateBundle).create(UserAuthenticator.class, TokenDAO.class, tokenService.getTokenDAO()));
         builder.setAuthorizer(new UserAuthorizer(userService));
         builder.setPrefix("Bearer");
         environment.jersey().register(new AuthDynamicFeature(builder.buildAuthFilter()));
@@ -100,6 +107,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerResources() {
+        environment.jersey().register(new AuthResource(userService, tokenService));
         environment.jersey().register(new RegisterResource(userService));
         environment.jersey().register(new UserResource(userService));
     }

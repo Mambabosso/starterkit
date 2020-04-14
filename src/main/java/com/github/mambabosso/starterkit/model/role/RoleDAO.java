@@ -5,9 +5,9 @@ import org.hibernate.SessionFactory;
 
 import java.util.Optional;
 
-public final class RoleDAO extends GenericDAO<Role> {
+public class RoleDAO extends GenericDAO<Role> {
 
-    private QRole role = QRole.role;
+    private final QRole role = QRole.role;
 
     public RoleDAO(SessionFactory sessionFactory) {
         super(sessionFactory);

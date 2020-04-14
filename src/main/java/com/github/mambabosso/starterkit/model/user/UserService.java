@@ -4,12 +4,14 @@ import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.util.Result;
 import com.github.mambabosso.starterkit.util.Validator;
+import lombok.Data;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Data
 public final class UserService {
 
     private final StarterkitConfiguration configuration;

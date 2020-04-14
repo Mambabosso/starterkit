@@ -1,5 +1,7 @@
 import Axios from "axios";
-import registerUrl from "./url";
+
+const registerUrl = "/api/register/new";
+
 
 function register(username, email, password) {
   return Axios.post(registerUrl, {

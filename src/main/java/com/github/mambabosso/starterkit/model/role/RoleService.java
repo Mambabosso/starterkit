@@ -3,10 +3,12 @@ package com.github.mambabosso.starterkit.model.role;
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.util.Result;
+import lombok.Data;
 
 import java.util.Objects;
 import java.util.Optional;
 
+@Data
 public final class RoleService {
 
     private final StarterkitConfiguration configuration;

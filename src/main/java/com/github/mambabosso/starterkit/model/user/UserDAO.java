@@ -6,9 +6,9 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 import java.util.Optional;
 
-public final class UserDAO extends GenericDAO<User> {
+public class UserDAO extends GenericDAO<User> {
 
-    private QUser user = QUser.user;
+    private final QUser user = QUser.user;
 
     public UserDAO(SessionFactory sessionFactory) {
         super(sessionFactory);

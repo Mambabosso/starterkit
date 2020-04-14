@@ -26,7 +26,6 @@ public class UserResource {
     }
 
     @GET
-    @RolesAllowed("5")
     @UnitOfWork
     @Path("/get")
     public Response get(@Auth User user, @QueryParam("offset") long offset, @QueryParam("limit") long limit) {
@@ -38,7 +37,6 @@ public class UserResource {
     }
 
     @GET
-    @RolesAllowed("5")
     @UnitOfWork
     @Path("/find")
     public Response find(@Auth User user, @QueryParam("offset") long offset, @QueryParam("limit") long limit, @QueryParam("name") String name, @QueryParam("mail") String mail) {
