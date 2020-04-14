@@ -1,7 +1,6 @@
 package com.github.mambabosso.starterkit.auth;
 
-import com.github.mambabosso.starterkit.user.User;
-import com.github.mambabosso.starterkit.util.Helper;
+import com.github.mambabosso.starterkit.model.user.User;
 import io.dropwizard.auth.Authorizer;
 import org.hibernate.SessionFactory;
 

@@ -11,11 +11,15 @@
 
     <properties>
         <mainClass>com.github.mambabosso.starterkit.Starterkit</mainClass>
-        <dropwizard.version>2.0.2</dropwizard.version>
+        <dropwizard.version>2.0.6</dropwizard.version>
         <mysql.connector.version>8.0.19</mysql.connector.version>
-        <querydsl.version>4.2.2</querydsl.version>
-        <junit.version>5.6.0</junit.version>
-        <node.version>v12.16.1</node.version>
+        <querydsl.version>4.3.1</querydsl.version>
+        <h2database.version>1.4.200</h2database.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
+        <lombok.version>1.18.12</lombok.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <junit.version>5.6.2</junit.version>
+        <node.version>v12.16.2</node.version>
         <maven.compiler.release>8</maven.compiler.release>
     </properties>
 
@@ -82,26 +86,26 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.200</version>
+            <version>${h2database.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
+            <version>${jbcrypt.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.26</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <dependency>

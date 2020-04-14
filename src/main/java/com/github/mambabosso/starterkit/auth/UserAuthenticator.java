@@ -1,7 +1,7 @@
 package com.github.mambabosso.starterkit.auth;
 
-import com.github.mambabosso.starterkit.user.QUser;
-import com.github.mambabosso.starterkit.user.User;
+import com.github.mambabosso.starterkit.model.user.QUser;
+import com.github.mambabosso.starterkit.model.user.User;
 import com.querydsl.jpa.impl.JPAQuery;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;

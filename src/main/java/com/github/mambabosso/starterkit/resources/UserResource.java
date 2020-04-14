@@ -1,8 +1,8 @@
 package com.github.mambabosso.starterkit.resources;
 
 import com.github.mambabosso.starterkit.error.Errors;
-import com.github.mambabosso.starterkit.user.User;
-import com.github.mambabosso.starterkit.user.UserService;
+import com.github.mambabosso.starterkit.model.user.User;
+import com.github.mambabosso.starterkit.model.user.UserService;
 import com.github.mambabosso.starterkit.util.Result;
 import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;

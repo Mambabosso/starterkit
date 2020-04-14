@@ -1,4 +1,4 @@
-package com.github.mambabosso.starterkit.role;
+package com.github.mambabosso.starterkit.model.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -33,6 +33,15 @@ public final class Role implements Serializable {
     private int level;
 
     private Role() {
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Role) {
+            Role r = (Role)other;
+            return this.name.contentEquals(r.name);
+        }
+        return false;
     }
 
     public static Role create(String name, int level) {

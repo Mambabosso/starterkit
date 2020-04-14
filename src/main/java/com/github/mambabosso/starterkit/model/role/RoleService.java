@@ -1,4 +1,4 @@
-package com.github.mambabosso.starterkit.role;
+package com.github.mambabosso.starterkit.model.role;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;

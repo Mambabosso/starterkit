@@ -1,4 +1,4 @@
-package com.github.mambabosso.starterkit.user;
+package com.github.mambabosso.starterkit.model.user;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;

@@ -1,8 +1,8 @@
-package com.github.mambabosso.starterkit.user;
+package com.github.mambabosso.starterkit.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.mambabosso.starterkit.role.Role;
+import com.github.mambabosso.starterkit.model.role.Role;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -51,6 +51,15 @@ public final class User implements Principal, Serializable {
     private String token;
 
     private User() {
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof User) {
+            User u = (User)other;
+            return this.name.contentEquals(u.name);
+        }
+        return false;
     }
 
     @Override
