@@ -24,5 +24,8 @@ public final class Errors {
     public static final ErrorCode NAME_ALREADY_TAKEN = ErrorCode.create(1010);
     public static final ErrorCode MAIL_ALREADY_TAKEN = ErrorCode.create(1011);
 
+    // login
+    public static final ErrorCode INVALID_CREDENTIALS = ErrorCode.create(2001);
+
 
 }

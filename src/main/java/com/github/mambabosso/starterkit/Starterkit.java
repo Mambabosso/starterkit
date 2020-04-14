@@ -15,7 +15,7 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
-import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
+import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -85,10 +85,10 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerAuth() {
-        BasicCredentialAuthFilter.Builder<User> builder = new BasicCredentialAuthFilter.Builder<>();
-        builder.setAuthenticator(new UserAuthenticator(hibernateBundle.getSessionFactory()));
-        builder.setAuthorizer(new UserAuthorizer(hibernateBundle.getSessionFactory()));
-        builder.setRealm("Starterkit Realm");
+        OAuthCredentialAuthFilter.Builder<User> builder = new OAuthCredentialAuthFilter.Builder<>();
+        builder.setAuthenticator(new UserAuthenticator(userService));
+        builder.setAuthorizer(new UserAuthorizer(userService));
+        builder.setPrefix("Bearer");
         environment.jersey().register(new AuthDynamicFeature(builder.buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));

@@ -4,6 +4,7 @@ import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.util.Result;
 import com.github.mambabosso.starterkit.util.Validator;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Objects;
@@ -61,6 +62,21 @@ public final class UserService {
             }
             Optional<User> user = userDAO.getUserByMail(mail);
             return user.map(Result::success).orElseGet(() -> Result.failure(Errors.INVALID_MAIL));
+        } catch (Exception ex) {
+            return Result.failure(Errors.UNKNOWN);
+        }
+    }
+
+    public Result<User> getByCredentials(String name, String password) {
+        try {
+            Optional<User> user = userDAO.getUserByName(name);
+            if (user.isPresent()) {
+                User u = user.get();
+                if (BCrypt.checkpw(password, u.getPassword())) {
+                    return Result.success(u);
+                }
+            }
+            return Result.failure(Errors.INVALID_CREDENTIALS);
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
         }
