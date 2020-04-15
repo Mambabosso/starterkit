@@ -20,11 +20,11 @@ public class UserAuthenticator implements Authenticator<String, User> {
         this.tokenDAO = Objects.requireNonNull(tokenDAO);
     }
 
-    private Result<User> get(String authToken) {
+    private Result<User> get(String token) {
         try {
-            Optional<Token> token = tokenDAO.getByValue(authToken);
-            if (token.isPresent()) {
-                Token t = token.get();
+            Optional<Token> tk = tokenDAO.getByValue(token);
+            if (tk.isPresent()) {
+                Token t = tk.get();
                 if (!t.expired()) {
                     return Result.success(t.getOwner());
                 }
@@ -38,8 +38,8 @@ public class UserAuthenticator implements Authenticator<String, User> {
 
     @UnitOfWork
     @Override
-    public Optional<User> authenticate(String authToken) throws AuthenticationException {
-        return get(authToken).optional();
+    public Optional<User> authenticate(String token) throws AuthenticationException {
+        return get(token).optional();
     }
 
 }

@@ -1,11 +1,11 @@
 package com.github.mambabosso.starterkit.resources;
 
 import com.github.mambabosso.starterkit.model.token.Token;
-import com.github.mambabosso.starterkit.model.token.TokenService;
 import com.github.mambabosso.starterkit.model.user.User;
-import com.github.mambabosso.starterkit.model.user.UserService;
+import com.github.mambabosso.starterkit.service.AuthService;
 import com.github.mambabosso.starterkit.util.DataMap;
 import com.github.mambabosso.starterkit.util.Result;
+import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.Consumes;
@@ -21,12 +21,10 @@ import java.util.Objects;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AuthResource {
 
-    private final UserService userService;
-    private final TokenService tokenService;
+    private final AuthService authService;
 
-    public AuthResource(UserService userService, TokenService tokenService) {
-        this.userService = Objects.requireNonNull(userService);
-        this.tokenService = Objects.requireNonNull(tokenService);
+    public AuthResource(AuthService authService) {
+        this.authService = Objects.requireNonNull(authService);
     }
 
     @POST
@@ -35,14 +33,22 @@ public class AuthResource {
     public Response login(DataMap dataMap) {
         String name = dataMap.tryGet("username", String.class);
         String password = dataMap.tryGet("password", String.class);
-        Result<User> user = userService.getByCredentials(name, password);
-        if (user.isSuccess()) {
-            Result<Token> token = tokenService.create(60 * 24 * 30, user.getValue());
-            if (token.isSuccess()) {
-                return Response.status(200).entity(token).build();
-            }
+        Result<Token> token = authService.login(name, password);
+        if (token.isSuccess()) {
+            return Response.status(200).entity(token).build();
         }
-        return Response.status(400).entity(user).build();
+        return Response.status(400).entity(token).build();
+    }
+
+    @POST
+    @UnitOfWork
+    @Path("/logout")
+    public Response logout(@Auth User user) {
+        Result<Token> token = authService.logout(user);
+        if (token.isSuccess()) {
+            return Response.status(200).entity(token).build();
+        }
+        return Response.status(400).entity(token).build();
     }
 
 }

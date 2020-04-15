@@ -29,21 +29,30 @@ public final class Token implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "value", unique = true)
-    private String value;
+    @Column(name = "hash", unique = true)
+    private String hash;
 
+    @JsonIgnore
     @NotNull
     @Column(name = "created")
     private DateTime created;
 
+    @JsonIgnore
     @NotNull
     @Column(name = "last_access")
     private DateTime lastAccess;
 
+    @JsonIgnore
     @NotNull
     @Column(name = "lifetime_minutes")
     private int lifetimeMinutes;
 
+    @JsonIgnore
+    @NotNull
+    @Column(name = "expired")
+    private boolean expired;
+
+    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner")
@@ -53,14 +62,14 @@ public final class Token implements Serializable {
     }
 
     public boolean expired() {
-        return Minutes.minutesBetween(created, DateTime.now()).getMinutes() > lifetimeMinutes;
+        return (Minutes.minutesBetween(created, DateTime.now()).getMinutes() > lifetimeMinutes) || expired;
     }
 
     @Override
     public boolean equals(Object other) {
         if (other instanceof Token) {
             Token t = (Token)other;
-            return this.value.contentEquals(t.value);
+            return this.hash.contentEquals(t.hash);
         }
         return false;
     }
@@ -68,10 +77,11 @@ public final class Token implements Serializable {
     public static Token create(int lifetimeMinutes, User owner) {
         Objects.requireNonNull(owner);
         Token token = new Token();
-        token.setValue(TokenGenerator.generate());
+        token.setHash(TokenGenerator.generate());
         token.setCreated(DateTime.now());
         token.setLastAccess(token.getCreated());
         token.setLifetimeMinutes(Math.max(lifetimeMinutes, 5));
+        token.setExpired(false);
         token.setOwner(owner);
         return token;
     }

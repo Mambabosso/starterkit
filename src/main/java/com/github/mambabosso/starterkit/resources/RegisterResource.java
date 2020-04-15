@@ -1,7 +1,7 @@
 package com.github.mambabosso.starterkit.resources;
 
 import com.github.mambabosso.starterkit.model.user.User;
-import com.github.mambabosso.starterkit.model.user.UserService;
+import com.github.mambabosso.starterkit.service.RegisterService;
 import com.github.mambabosso.starterkit.util.DataMap;
 import com.github.mambabosso.starterkit.util.Result;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -16,10 +16,10 @@ import java.util.Objects;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RegisterResource {
 
-    private final UserService userService;
+    private final RegisterService registerService;
 
-    public RegisterResource(UserService userService) {
-        this.userService = Objects.requireNonNull(userService);
+    public RegisterResource(RegisterService registerService) {
+        this.registerService = Objects.requireNonNull(registerService);
     }
 
     @POST
@@ -29,7 +29,7 @@ public class RegisterResource {
         String name = dataMap.tryGet("username", String.class);
         String mail = dataMap.tryGet("email", String.class);
         String password = dataMap.tryGet("password", String.class);
-        Result<User> user = userService.register(name, mail, password);
+        Result<User> user = registerService.register(name, mail, password);
         if (user.isSuccess()) {
             return Response.ok(user).build();
         }
