@@ -8,6 +8,5 @@ Vue.use(VueI18n);
 export default new VueI18n({
     fallbackLocale: "en_US",
     locale: "en_US",
-    messages: Messages
+    messages: Messages,
 });
-

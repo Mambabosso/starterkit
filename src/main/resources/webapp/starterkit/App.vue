@@ -1,58 +1,54 @@
 <template>
-  <div id="sk-main">
-    <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div id="sk-main">
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <router-link class="navbar-brand" to="/">{{
+                    $t("app.starterkit")
+                }}</router-link>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#skNavbarToggle"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="skNavbarToggle">
+                    <div class="navbar-nav">
+                        <router-link class="nav-item nav-link" to="/settings">{{
+                            $t("app.settings")
+                        }}</router-link>
 
-        <router-link class="navbar-brand" to="/">{{
-          $t("app.starterkit")
-        }}</router-link>
+                        <router-link class="nav-item nav-link" to="/register">{{
+                            $t("app.register")
+                        }}</router-link>
 
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#skNavbarToggle"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="skNavbarToggle">
-          <div class="navbar-nav">
-
-            <router-link class="nav-item nav-link" to="/settings">{{
-              $t("app.settings")
-            }}</router-link>
-
-            <router-link class="nav-item nav-link" to="/register">{{
-              $t("app.register")
-            }}</router-link>
-
-            <router-link class="nav-item nav-link" to="/login">{{
-              $t("app.login")
-            }}</router-link>
-
-          </div>
+                        <router-link class="nav-item nav-link" to="/login">{{
+                            $t("app.login")
+                        }}</router-link>
+                    </div>
+                </div>
+            </nav>
         </div>
-        
-      </nav>
+        <div class="router-content">
+            <router-view></router-view>
+        </div>
     </div>
-    <div class="router-content">
-      <router-view></router-view>
-    </div>
-  </div>
 </template>
 
 <script>
-export default {
-  name: "App",
-  data() {
-    return {};
-  }
-};
+    export default {
+        name: "App",
+        data() {
+            return {
+                authToken: "",
+            };
+        },
+    };
 </script>
 
 <style scoped>
-.router-content {
-  padding-top: 16px;
-}
+    .router-content {
+        padding-top: 16px;
+    }
 </style>

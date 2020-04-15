@@ -1,12 +1,11 @@
 <template>
-  <div class="settings-form"></div>
+    <div class="settings-form"></div>
 </template>
 
 <script>
-export default {
-  name: "SettingsForm"
-};
+    export default {
+        name: "SettingsForm",
+    };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

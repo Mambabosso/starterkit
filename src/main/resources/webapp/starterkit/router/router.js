@@ -5,5 +5,5 @@ import Routes from "./routes";
 Vue.use(VueRouter);
 
 export default new VueRouter({
-  routes: Routes
+    routes: Routes,
 });
