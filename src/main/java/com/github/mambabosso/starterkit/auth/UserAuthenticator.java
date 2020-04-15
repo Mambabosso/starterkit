@@ -8,6 +8,7 @@ import com.github.mambabosso.starterkit.util.Result;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.joda.time.DateTime;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -26,7 +27,9 @@ public class UserAuthenticator implements Authenticator<String, User> {
             if (tk.isPresent()) {
                 Token t = tk.get();
                 if (!t.expired()) {
-                    return Result.success(t.getOwner());
+                    if (tokenDAO.updateLastAccess(t, DateTime.now()) > 0) {
+                        return Result.success(t.getOwner());
+                    }
                 }
                 return Result.failure(Errors.TOKEN_EXPIRED);
             }

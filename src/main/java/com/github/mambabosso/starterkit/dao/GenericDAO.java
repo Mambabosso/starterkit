@@ -1,6 +1,8 @@
 package com.github.mambabosso.starterkit.dao;
 
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.types.EntityPath;
+import com.querydsl.jpa.hibernate.HibernateQuery;
+import com.querydsl.jpa.hibernate.HibernateUpdateClause;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,12 +20,12 @@ public abstract class GenericDAO<T extends Serializable> extends AbstractDAO<T> 
         this.sessionFactory = sessionFactory;
     }
 
-    private Session session() {
+    protected Session session() {
         return currentSession();
     }
 
-    protected final JPAQuery<T> query(final long offset, final long limit) {
-        JPAQuery<T> query = new JPAQuery<>(session());
+    protected final HibernateQuery<T> query(final long offset, final long limit) {
+        HibernateQuery<T> query = new HibernateQuery<>(session());
         if (offset > -1) {
             query = query.offset(offset);
         }
@@ -33,8 +35,13 @@ public abstract class GenericDAO<T extends Serializable> extends AbstractDAO<T> 
         return query;
     }
 
-    protected final JPAQuery<T> query() {
+    protected final HibernateQuery<T> query() {
         return query(-1, -1);
+    }
+
+    protected final HibernateUpdateClause update(EntityPath<T> entityPath) {
+        Objects.requireNonNull(entityPath);
+        return new HibernateUpdateClause(session(), entityPath);
     }
 
     protected final Serializable create(final T value) {
