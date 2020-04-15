@@ -26,10 +26,8 @@ public class UserAuthenticator implements Authenticator<String, User> {
             Optional<Token> tk = tokenDAO.getByValue(token);
             if (tk.isPresent()) {
                 Token t = tk.get();
-                if (!t.expired()) {
-                    if (tokenDAO.updateLastAccess(t, DateTime.now()) > 0) {
-                        return Result.success(t.getOwner());
-                    }
+                if (!t.expired() && tokenDAO.updateLastAccess(t, DateTime.now()) > 0) {
+                    return Result.success(t.getOwner());
                 }
                 return Result.failure(Errors.TOKEN_EXPIRED);
             }
