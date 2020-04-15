@@ -24,12 +24,16 @@ public class TokenDAO extends GenericDAO<Token> {
         throw new Exception();
     }
 
-    public Optional<Token> getByValue(String value) {
-        return Optional.ofNullable(query().select(token).from(token).where(token.value.eq(value)).fetchFirst());
+    public Optional<Token> getByValue(String hash) {
+        return Optional.ofNullable(query().select(token).from(token).where(token.hash.eq(hash)).fetchFirst());
     }
 
     public long updateLastAccess(Token t, DateTime dateTime) {
         return update(token).set(token.lastAccess, dateTime).where(token.id.eq(t.getId())).execute();
+    }
+
+    public long updateExpired(Long userId) {
+        return update(token).set(token.expired, true).where(token.owner.id.eq(userId)).execute();
     }
 
 }

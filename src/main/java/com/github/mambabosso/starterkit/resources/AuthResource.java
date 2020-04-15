@@ -44,11 +44,11 @@ public class AuthResource {
     @UnitOfWork
     @Path("/logout")
     public Response logout(@Auth User user) {
-        Result<Token> token = authService.logout(user);
-        if (token.isSuccess()) {
-            return Response.status(200).entity(token).build();
+        Result<Long> count = authService.logout(user);
+        if (count.isSuccess()) {
+            return Response.status(200).entity(count).build();
         }
-        return Response.status(400).entity(token).build();
+        return Response.status(400).entity(count).build();
     }
 
 }

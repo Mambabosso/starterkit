@@ -7,6 +7,7 @@ import com.github.mambabosso.starterkit.model.token.TokenDAO;
 import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.util.Result;
+import io.dropwizard.auth.Auth;
 import lombok.Data;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -54,9 +55,9 @@ public final class AuthService {
         }
     }
 
-    public Result<Token> logout(User user) {
+    public Result<Long> logout(User user) {
         try {
-            return Result.failure(Errors.UNKNOWN);
+            return Result.success(tokenDAO.updateExpired(user.getId()));
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
         }
