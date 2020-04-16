@@ -3,6 +3,7 @@ package com.github.mambabosso.starterkit;
 import com.github.mambabosso.starterkit.auth.UserAuthenticator;
 import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
+import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
 import com.github.mambabosso.starterkit.model.token.Token;
 import com.github.mambabosso.starterkit.model.token.TokenDAO;
 import com.github.mambabosso.starterkit.resources.AuthResource;
@@ -13,6 +14,7 @@ import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.service.AuthService;
 import com.github.mambabosso.starterkit.service.RegisterService;
+import com.github.mambabosso.starterkit.util.Helper;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -24,6 +26,7 @@ import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
+
 
 public final class Starterkit extends Application<StarterkitConfiguration> {
 
@@ -96,13 +99,21 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerAuth() {
-        OAuthCredentialAuthFilter.Builder<User> builder = new OAuthCredentialAuthFilter.Builder<>();
-        builder.setAuthenticator(new UnitOfWorkAwareProxyFactory(hibernateBundle).create(UserAuthenticator.class, TokenDAO.class, authService.getTokenDAO()));
-        builder.setAuthorizer(new UserAuthorizer());
-        builder.setPrefix("Bearer");
-        environment.jersey().register(new AuthDynamicFeature(builder.buildAuthFilter()));
+
+        OAuthCredentialAuthFilter.Builder<User> oauthBuilder = new OAuthCredentialAuthFilter.Builder<>();
+
+        Class<?>[] classes = Helper.classArray(2, JWTConfiguration.class, UserDAO.class);
+        Object[] params = Helper.objectArray(2, configuration.getJWTConfiguration(), authService.getUserDAO());
+        oauthBuilder.setAuthenticator(new UnitOfWorkAwareProxyFactory(hibernateBundle).create(UserAuthenticator.class, classes, params));
+
+        oauthBuilder.setAuthorizer(new UserAuthorizer());
+
+        oauthBuilder.setPrefix("Bearer");
+
+        environment.jersey().register(new AuthDynamicFeature(oauthBuilder.buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+
     }
 
     private void registerResources() {

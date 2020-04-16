@@ -32,6 +32,11 @@ public final class Result<T> implements Serializable {
         return Optional.empty();
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     public static <T> Result<T> success(final T value) {
         Objects.requireNonNull(value);
         Result<T> result = new Result<>();

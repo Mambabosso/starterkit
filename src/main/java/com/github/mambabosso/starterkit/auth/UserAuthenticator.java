@@ -1,37 +1,38 @@
 package com.github.mambabosso.starterkit.auth;
 
 import com.github.mambabosso.starterkit.error.Errors;
-import com.github.mambabosso.starterkit.model.token.Token;
-import com.github.mambabosso.starterkit.model.token.TokenDAO;
+import com.github.mambabosso.starterkit.jwt.Handler;
+import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
 import com.github.mambabosso.starterkit.model.user.User;
+import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.util.Result;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.hibernate.UnitOfWork;
-import org.joda.time.DateTime;
 
 import java.util.Objects;
 import java.util.Optional;
 
 public class UserAuthenticator implements Authenticator<String, User> {
 
-    private final TokenDAO tokenDAO;
+    private final JWTConfiguration jwtConfiguration;
+    private final UserDAO userDAO;
 
-    public UserAuthenticator(TokenDAO tokenDAO) {
-        this.tokenDAO = Objects.requireNonNull(tokenDAO);
+    public UserAuthenticator(JWTConfiguration jwtConfiguration, UserDAO userDAO) {
+        this.jwtConfiguration = Objects.requireNonNull(jwtConfiguration);
+        this.userDAO = Objects.requireNonNull(userDAO);
     }
 
     private Result<User> get(String token) {
         try {
-            Optional<Token> tk = tokenDAO.getByValue(token);
-            if (tk.isPresent()) {
-                Token t = tk.get();
-                if (!t.expired() && tokenDAO.updateLastAccess(t, DateTime.now()) > 0) {
-                    return Result.success(t.getOwner());
+            Result<Long> userId = Handler.decode(jwtConfiguration, token);
+            if (userId.isSuccess()) {
+                Optional<User> user = userDAO.getUserById(userId.getValue());
+                if (user.isPresent()) {
+                    return Result.success(user.get());
                 }
-                return Result.failure(Errors.TOKEN_EXPIRED);
             }
-            return Result.failure(Errors.UNKNOWN);
+            return Result.failure(Errors.INVALID_TOKEN);
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
         }

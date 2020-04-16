@@ -27,7 +27,5 @@ public final class Errors {
 
     // login
     public static final ErrorCode INVALID_CREDENTIALS = ErrorCode.create(2001);
-    public static final ErrorCode TOKEN_EXPIRED = ErrorCode.create(2002);
-
 
 }

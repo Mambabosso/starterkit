@@ -16,6 +16,7 @@
         <querydsl.version>4.3.1</querydsl.version>
         <h2database.version>1.4.200</h2database.version>
         <jbcrypt.version>0.4</jbcrypt.version>
+        <java.jwt.version>3.10.2</java.jwt.version>
         <lombok.version>1.18.12</lombok.version>
         <node.version>v12.16.2</node.version>
         <maven.compiler.release>8</maven.compiler.release>
@@ -91,6 +92,12 @@
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>${jbcrypt.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java.jwt.version}</version>
         </dependency>
 
         <dependency>
