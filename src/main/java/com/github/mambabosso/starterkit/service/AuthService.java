@@ -2,8 +2,8 @@ package com.github.mambabosso.starterkit.service;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;
-import com.github.mambabosso.starterkit.jwt.Handler;
 import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
+import com.github.mambabosso.starterkit.jwt.JWTHandler;
 import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.util.Result;
@@ -45,7 +45,7 @@ public final class AuthService {
         try {
             Result<User> user = getUserByCredentials(name, password);
             if (user.isSuccess()) {
-                return Handler.encode(jwtConfiguration, user.getValue().getId());
+                return JWTHandler.encode(jwtConfiguration, user.getValue().getId());
             }
             return Result.failure(user.getError());
         } catch (Exception ex) {

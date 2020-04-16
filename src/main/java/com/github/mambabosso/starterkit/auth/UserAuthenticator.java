@@ -1,8 +1,8 @@
 package com.github.mambabosso.starterkit.auth;
 
 import com.github.mambabosso.starterkit.error.Errors;
-import com.github.mambabosso.starterkit.jwt.Handler;
 import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
+import com.github.mambabosso.starterkit.jwt.JWTHandler;
 import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.util.Result;
@@ -25,7 +25,7 @@ public class UserAuthenticator implements Authenticator<String, User> {
 
     private Result<User> get(String token) {
         try {
-            Result<Long> userId = Handler.decode(jwtConfiguration, token);
+            Result<Long> userId = JWTHandler.decode(jwtConfiguration, token);
             if (userId.isSuccess()) {
                 Optional<User> user = userDAO.getUserById(userId.getValue());
                 if (user.isPresent()) {

@@ -12,7 +12,7 @@ import org.joda.time.Duration;
 
 import java.util.Objects;
 
-public final class Handler {
+public final class JWTHandler {
 
     public static Result<String> encode(JWTConfiguration jwtConfiguration, Long userId) {
         try {
