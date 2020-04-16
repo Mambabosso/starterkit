@@ -14,10 +14,10 @@ import java.util.Objects;
 
 public final class JWTHandler {
 
-    public static Result<String> encode(JWTConfiguration jwtConfiguration, Long userId) {
+    public static Result<String> encode(JWTConfiguration jwtConfiguration, String name) {
         try {
             Objects.requireNonNull(jwtConfiguration);
-            Objects.requireNonNull(userId);
+            Objects.requireNonNull(name);
 
             Algorithm algorithm = Algorithm.HMAC256(jwtConfiguration.getSecretKey());
 
@@ -28,7 +28,7 @@ public final class JWTHandler {
             builder.withIssuedAt(now.toDate());
             builder.withExpiresAt(now.plus(Duration.millis(jwtConfiguration.getLifetime().toMilliseconds())).toDate());
 
-            builder.withClaim("uid", userId);
+            builder.withClaim("username", name);
 
             return Result.success(builder.sign(algorithm));
 
@@ -37,7 +37,7 @@ public final class JWTHandler {
         }
     }
 
-    public static Result<Long> decode(JWTConfiguration jwtConfiguration, String token) {
+    public static Result<String> decode(JWTConfiguration jwtConfiguration, String token) {
         try {
             Objects.requireNonNull(jwtConfiguration);
             Objects.requireNonNull(token);
@@ -49,7 +49,7 @@ public final class JWTHandler {
 
             DecodedJWT jwt = verification.build().verify(token);
 
-            return Result.success(jwt.getClaim("uid").asLong());
+            return Result.success(jwt.getClaim("username").asString());
 
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);

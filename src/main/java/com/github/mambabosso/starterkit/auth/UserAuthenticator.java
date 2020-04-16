@@ -25,9 +25,9 @@ public class UserAuthenticator implements Authenticator<String, User> {
 
     private Result<User> get(String token) {
         try {
-            Result<Long> userId = JWTHandler.decode(jwtConfiguration, token);
-            if (userId.isSuccess()) {
-                Optional<User> user = userDAO.getUserById(userId.getValue());
+            Result<String> name = JWTHandler.decode(jwtConfiguration, token);
+            if (name.isSuccess()) {
+                Optional<User> user = userDAO.getUserByName(name.getValue());
                 if (user.isPresent()) {
                     return Result.success(user.get());
                 }

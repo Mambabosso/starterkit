@@ -45,7 +45,7 @@ public final class AuthService {
         try {
             Result<User> user = getUserByCredentials(name, password);
             if (user.isSuccess()) {
-                return JWTHandler.encode(jwtConfiguration, user.getValue().getId());
+                return JWTHandler.encode(jwtConfiguration, user.getValue().getName());
             }
             return Result.failure(user.getError());
         } catch (Exception ex) {

@@ -23,10 +23,6 @@ public class UserDAO extends GenericDAO<User> {
         throw new Exception();
     }
 
-    public Optional<User> getUserById(Long id) {
-        return Optional.ofNullable(query().select(user).from(user).where(user.id.eq(id)).fetchFirst());
-    }
-
     public Optional<User> getUserByName(String name) {
         return Optional.ofNullable(query().select(user).from(user).where(user.name.eq(name)).fetchFirst());
     }
