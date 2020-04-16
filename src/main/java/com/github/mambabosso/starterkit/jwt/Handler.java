@@ -26,7 +26,7 @@ public final class Handler {
 
             DateTime now = DateTime.now();
             builder.withIssuedAt(now.toDate());
-            builder.withExpiresAt(now.plus(Duration.parse(jwtConfiguration.getLifetime())).toDate());
+            builder.withExpiresAt(now.plus(Duration.millis(jwtConfiguration.getLifetime().toMilliseconds())).toDate());
 
             builder.withClaim("uid", userId);
 

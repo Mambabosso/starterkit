@@ -1,5 +1,6 @@
 package com.github.mambabosso.starterkit.jwt;
 
+import io.dropwizard.util.Duration;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -17,7 +18,6 @@ public class JWTConfiguration {
     private String secretKey;
 
     @Valid
-    @NotEmpty
-    private String lifetime;
+    private Duration lifetime;
 
 }
