@@ -1,11 +1,8 @@
 package com.github.mambabosso.starterkit.resources;
 
-import com.github.mambabosso.starterkit.model.token.Token;
-import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.service.AuthService;
 import com.github.mambabosso.starterkit.util.DataMap;
 import com.github.mambabosso.starterkit.util.Result;
-import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.Consumes;
@@ -33,22 +30,11 @@ public class AuthResource {
     public Response login(DataMap dataMap) {
         String name = dataMap.tryGet("username", String.class);
         String password = dataMap.tryGet("password", String.class);
-        Result<Token> token = authService.login(name, password);
+        Result<String> token = authService.login(name, password);
         if (token.isSuccess()) {
             return Response.status(200).entity(token).build();
         }
         return Response.status(400).entity(token).build();
-    }
-
-    @POST
-    @UnitOfWork
-    @Path("/logout")
-    public Response logout(@Auth User user) {
-        Result<Long> count = authService.logout(user);
-        if (count.isSuccess()) {
-            return Response.status(200).entity(count).build();
-        }
-        return Response.status(400).entity(count).build();
     }
 
 }

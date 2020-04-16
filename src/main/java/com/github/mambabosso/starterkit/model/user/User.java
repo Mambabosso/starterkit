@@ -3,7 +3,6 @@ package com.github.mambabosso.starterkit.model.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.mambabosso.starterkit.model.role.Role;
-import com.github.mambabosso.starterkit.model.token.Token;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -46,10 +45,6 @@ public final class User implements Principal, Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user"), inverseJoinColumns = @JoinColumn(name = "role"))
     private Set<Role> roles;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private Set<Token> tokens;
 
     private User() {
     }

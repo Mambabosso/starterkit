@@ -2,12 +2,11 @@ package com.github.mambabosso.starterkit.service;
 
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;
-import com.github.mambabosso.starterkit.model.token.Token;
-import com.github.mambabosso.starterkit.model.token.TokenDAO;
+import com.github.mambabosso.starterkit.jwt.Handler;
+import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
 import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.util.Result;
-import io.dropwizard.auth.Auth;
 import lombok.Data;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -18,13 +17,13 @@ import java.util.Optional;
 public final class AuthService {
 
     private final StarterkitConfiguration configuration;
+    private final JWTConfiguration jwtConfiguration;
     private final UserDAO userDAO;
-    private final TokenDAO tokenDAO;
 
-    public AuthService(StarterkitConfiguration configuration, UserDAO userDAO, TokenDAO tokenDAO) {
+    public AuthService(StarterkitConfiguration configuration, UserDAO userDAO) {
         this.configuration = Objects.requireNonNull(configuration);
+        this.jwtConfiguration = Objects.requireNonNull(this.configuration.getJWTConfiguration());
         this.userDAO = Objects.requireNonNull(userDAO);
-        this.tokenDAO = Objects.requireNonNull(tokenDAO);
     }
 
     public Result<User> getUserByCredentials(String name, String password) {
@@ -42,22 +41,13 @@ public final class AuthService {
         }
     }
 
-    public Result<Token> login(String name, String password) {
+    public Result<String> login(String name, String password) {
         try {
             Result<User> user = getUserByCredentials(name, password);
             if (user.isSuccess()) {
-                Token token = tokenDAO.create(60 * 24 * 30, user.getValue());
-                return Result.success(token);
+                return Handler.encode(jwtConfiguration, user.getValue().getId());
             }
             return Result.failure(user.getError());
-        } catch (Exception ex) {
-            return Result.failure(Errors.UNKNOWN);
-        }
-    }
-
-    public Result<Long> logout(User user) {
-        try {
-            return Result.success(tokenDAO.updateExpired(user.getId()));
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
         }

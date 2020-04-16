@@ -4,8 +4,6 @@ import com.github.mambabosso.starterkit.auth.UserAuthenticator;
 import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
 import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
-import com.github.mambabosso.starterkit.model.token.Token;
-import com.github.mambabosso.starterkit.model.token.TokenDAO;
 import com.github.mambabosso.starterkit.resources.AuthResource;
 import com.github.mambabosso.starterkit.resources.RegisterResource;
 import com.github.mambabosso.starterkit.model.role.Role;
@@ -78,7 +76,7 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     }
 
     private void registerHibernateBundle() {
-        hibernateBundle = createHibernateBundle(User.class, Role.class, Token.class);
+        hibernateBundle = createHibernateBundle(User.class, Role.class);
         bootstrap.addBundle(hibernateBundle);
     }
 
@@ -93,9 +91,8 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     private void createDAOServices() {
         UserDAO userDAO = new UserDAO(hibernateBundle.getSessionFactory());
         RoleDAO roleDAO = new RoleDAO(hibernateBundle.getSessionFactory());
-        TokenDAO tokenDAO = new TokenDAO(hibernateBundle.getSessionFactory());
         registerService = new RegisterService(configuration, userDAO);
-        authService = new AuthService(configuration, userDAO, tokenDAO);
+        authService = new AuthService(configuration, userDAO);
     }
 
     private void registerAuth() {
