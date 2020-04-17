@@ -3,6 +3,7 @@ package com.github.mambabosso.starterkit.service;
 import com.github.mambabosso.starterkit.StarterkitConfiguration;
 import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
+import com.github.mambabosso.starterkit.jwt.JWTHandler;
 import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.util.Result;
@@ -25,7 +26,7 @@ public final class AuthService {
         this.userDAO = Objects.requireNonNull(userDAO);
     }
 
-    public Result<User> getUserByCredentials(String name, String password) {
+    private Result<User> getUserByCredentials(String name, String password) {
         try {
             Optional<User> user = userDAO.getUserByName(name);
             if (user.isPresent()) {
@@ -35,6 +36,18 @@ public final class AuthService {
                 }
             }
             return Result.failure(Errors.INVALID_CREDENTIALS);
+        } catch (Exception ex) {
+            return Result.failure(Errors.UNKNOWN);
+        }
+    }
+
+    public Result<String> login(String name, String password) {
+        try {
+            Result<User> user = getUserByCredentials(name, password);
+            if (user.isSuccess()) {
+                return JWTHandler.encode(jwtConfiguration, user.getValue());
+            }
+            return Result.failure(user.getError());
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
         }

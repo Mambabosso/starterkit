@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.Verification;
 import com.github.mambabosso.starterkit.error.Errors;
+import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.util.Result;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -14,10 +15,10 @@ import java.util.Objects;
 
 public final class JWTHandler {
 
-    public static Result<String> encode(JWTConfiguration jwtConfiguration, String name) {
+    public static Result<String> encode(JWTConfiguration jwtConfiguration, User user) {
         try {
             Objects.requireNonNull(jwtConfiguration);
-            Objects.requireNonNull(name);
+            Objects.requireNonNull(user);
 
             Algorithm algorithm = Algorithm.HMAC256(jwtConfiguration.getSecret());
 
@@ -28,7 +29,7 @@ public final class JWTHandler {
             builder.withIssuedAt(now.toDate());
             builder.withExpiresAt(now.plus(Duration.millis(jwtConfiguration.getLifetime().toMilliseconds())).toDate());
 
-            builder.withClaim("username", name);
+            builder.withClaim("data", user.getName());
 
             return Result.success(builder.sign(algorithm));
 
@@ -37,7 +38,7 @@ public final class JWTHandler {
         }
     }
 
-    public static Result<String> decode(JWTConfiguration jwtConfiguration, String token) {
+    public static Result<User> decode(JWTConfiguration jwtConfiguration, String token) {
         try {
             Objects.requireNonNull(jwtConfiguration);
             Objects.requireNonNull(token);
@@ -49,7 +50,7 @@ public final class JWTHandler {
 
             DecodedJWT jwt = verification.build().verify(token);
 
-            return Result.success(jwt.getClaim("username").asString());
+            return Result.failure(Errors.UNKNOWN);
 
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);

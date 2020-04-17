@@ -3,7 +3,6 @@ package com.github.mambabosso.starterkit;
 import com.github.mambabosso.starterkit.auth.UserAuthenticator;
 import com.github.mambabosso.starterkit.auth.UserAuthorizer;
 import com.github.mambabosso.starterkit.health.DatabaseHealthCheck;
-import com.github.mambabosso.starterkit.jwt.JWTConfiguration;
 import com.github.mambabosso.starterkit.resources.AuthResource;
 import com.github.mambabosso.starterkit.resources.RegisterResource;
 import com.github.mambabosso.starterkit.model.role.Role;
@@ -12,7 +11,6 @@ import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.service.AuthService;
 import com.github.mambabosso.starterkit.service.RegisterService;
-import com.github.mambabosso.starterkit.util.Helper;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -20,7 +18,6 @@ import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
-import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
@@ -98,13 +95,8 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
     private void registerAuth() {
 
         OAuthCredentialAuthFilter.Builder<User> oauthBuilder = new OAuthCredentialAuthFilter.Builder<>();
-
-        Class<?>[] classes = Helper.classArray(JWTConfiguration.class, UserDAO.class);
-        Object[] params = Helper.objectArray(configuration.getJWTConfiguration(), authService.getUserDAO());
-        oauthBuilder.setAuthenticator(new UnitOfWorkAwareProxyFactory(hibernateBundle).create(UserAuthenticator.class, classes, params));
-
+        oauthBuilder.setAuthenticator(new UserAuthenticator(configuration));
         oauthBuilder.setAuthorizer(new UserAuthorizer());
-
         oauthBuilder.setPrefix("Bearer");
 
         environment.jersey().register(new AuthDynamicFeature(oauthBuilder.buildAuthFilter()));

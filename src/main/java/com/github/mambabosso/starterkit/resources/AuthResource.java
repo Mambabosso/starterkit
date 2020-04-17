@@ -30,7 +30,11 @@ public class AuthResource {
     public Response login(DataMap dataMap) {
         String name = dataMap.tryGet("username", String.class);
         String password = dataMap.tryGet("password", String.class);
-        return Response.status(200).entity("token").build();
+        Result<String> token = authService.login(name, password);
+        if (token.isSuccess()) {
+            return Response.status(200).entity(token).build();
+        }
+        return Response.status(400).entity(token).build();
     }
 
 }
