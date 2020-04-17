@@ -8,8 +8,8 @@ import com.auth0.jwt.interfaces.Verification;
 import com.github.mambabosso.starterkit.error.Errors;
 import com.github.mambabosso.starterkit.model.user.User;
 import com.github.mambabosso.starterkit.util.Result;
+import com.github.mambabosso.starterkit.util.Serializer;
 import org.joda.time.DateTime;
-import org.joda.time.Duration;
 
 import java.util.Objects;
 
@@ -27,11 +27,13 @@ public final class JWTHandler {
 
             DateTime now = DateTime.now();
             builder.withIssuedAt(now.toDate());
-            builder.withExpiresAt(now.plus(Duration.millis(jwtConfiguration.getLifetime().toMilliseconds())).toDate());
+            builder.withExpiresAt(now.plus(jwtConfiguration.lifetime()).toDate());
 
-            builder.withClaim("data", user.getName());
+            builder.withClaim("data", Serializer.toMap(user));
 
-            return Result.success(builder.sign(algorithm));
+            String token = builder.sign(algorithm);
+
+            return Result.success(token);
 
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
@@ -50,7 +52,9 @@ public final class JWTHandler {
 
             DecodedJWT jwt = verification.build().verify(token);
 
-            return Result.failure(Errors.UNKNOWN);
+            User user = Serializer.fromMap(jwt.getClaim("data").asMap(), User.class);
+
+            return Result.success(user);
 
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);

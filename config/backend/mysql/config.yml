@@ -13,7 +13,7 @@ server:
     - type: http
       port: 8081
 
-jwtConfiguration:
+jwt:
   issuer: starterkit
   secret: 123456
   lifetime: '30 days'

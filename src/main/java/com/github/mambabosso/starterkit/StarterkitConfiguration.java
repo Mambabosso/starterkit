@@ -28,12 +28,12 @@ public class StarterkitConfiguration extends Configuration {
         this.database = database;
     }
 
-    @JsonProperty("jwtConfiguration")
+    @JsonProperty("jwt")
     public JWTConfiguration getJWTConfiguration() {
         return jwtConfiguration;
     }
 
-    @JsonProperty("jwtConfiguration")
+    @JsonProperty("jwt")
     public void setJWTConfiguration(JWTConfiguration jwtConfiguration) {
         this.jwtConfiguration = jwtConfiguration;
     }
