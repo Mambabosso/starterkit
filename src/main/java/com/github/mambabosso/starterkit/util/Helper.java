@@ -1,5 +1,7 @@
 package com.github.mambabosso.starterkit.util;
 
+import org.joda.time.Duration;
+
 public final class Helper {
 
     public static boolean containsWhitespace(final String str) {
@@ -35,6 +37,22 @@ public final class Helper {
         Object[] result = new Object[length];
         System.arraycopy(objects, 0, result, 0, length);
         return result;
+    }
+
+    public static Duration toJodaTimeDuration(java.time.Duration duration) {
+        try {
+            return Duration.millis(duration.toMillis());
+        } catch (Exception ex) {
+            return Duration.ZERO;
+        }
+    }
+
+    public static Duration toJodaTimeDuration(io.dropwizard.util.Duration duration) {
+        try {
+            return Duration.millis(duration.toMilliseconds());
+        } catch (Exception ex) {
+            return Duration.ZERO;
+        }
     }
 
 }

@@ -15,5 +15,5 @@ server:
 
 jwtConfiguration:
   issuer: starterkit
-  secretKey: 123456
+  secret: 123456
   lifetime: '30 days'

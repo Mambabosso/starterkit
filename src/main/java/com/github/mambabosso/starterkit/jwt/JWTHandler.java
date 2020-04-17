@@ -19,7 +19,7 @@ public final class JWTHandler {
             Objects.requireNonNull(jwtConfiguration);
             Objects.requireNonNull(name);
 
-            Algorithm algorithm = Algorithm.HMAC256(jwtConfiguration.getSecretKey());
+            Algorithm algorithm = Algorithm.HMAC256(jwtConfiguration.getSecret());
 
             JWTCreator.Builder builder = JWT.create();
             builder.withIssuer(jwtConfiguration.getIssuer());
@@ -42,7 +42,7 @@ public final class JWTHandler {
             Objects.requireNonNull(jwtConfiguration);
             Objects.requireNonNull(token);
 
-            Algorithm algorithm = Algorithm.HMAC256(jwtConfiguration.getSecretKey());
+            Algorithm algorithm = Algorithm.HMAC256(jwtConfiguration.getSecret());
 
             Verification verification = JWT.require(algorithm);
             verification.withIssuer(jwtConfiguration.getIssuer());
