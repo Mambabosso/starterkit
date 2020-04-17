@@ -16,10 +16,16 @@ public final class DataMap implements Serializable {
     }
 
     public <T extends Serializable> T tryGet(final String key, final Class<T> c) {
-        if (key != null && !key.isEmpty() && dataMap != null && dataMap.containsKey(key)) {
-            return c.cast(dataMap.get(key));
+        try {
+            Objects.requireNonNull(key);
+            Objects.requireNonNull(c);
+            if (dataMap.containsKey(key)) {
+                return c.cast(dataMap.get(key));
+            }
+            return null;
+        } catch (Exception ex) {
+            return null;
         }
-        return null;
     }
 
     public Map<String, Serializable> getDataMap() {

@@ -99,8 +99,8 @@ public final class Starterkit extends Application<StarterkitConfiguration> {
 
         OAuthCredentialAuthFilter.Builder<User> oauthBuilder = new OAuthCredentialAuthFilter.Builder<>();
 
-        Class<?>[] classes = Helper.classArray(2, JWTConfiguration.class, UserDAO.class);
-        Object[] params = Helper.objectArray(2, configuration.getJWTConfiguration(), authService.getUserDAO());
+        Class<?>[] classes = Helper.classArray(JWTConfiguration.class, UserDAO.class);
+        Object[] params = Helper.objectArray(configuration.getJWTConfiguration(), authService.getUserDAO());
         oauthBuilder.setAuthenticator(new UnitOfWorkAwareProxyFactory(hibernateBundle).create(UserAuthenticator.class, classes, params));
 
         oauthBuilder.setAuthorizer(new UserAuthorizer());
