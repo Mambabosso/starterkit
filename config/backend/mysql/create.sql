@@ -14,7 +14,6 @@ CREATE TABLE user (
 CREATE TABLE role (
     role_id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(64) NOT NULL UNIQUE,
-    level SMALLINT NOT NULL,
     PRIMARY KEY (role_id)
 );
 
