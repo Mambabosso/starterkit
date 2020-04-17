@@ -29,7 +29,7 @@ public final class JWTHandler {
             builder.withIssuedAt(now.toDate());
             builder.withExpiresAt(now.plus(jwtConfiguration.lifetime()).toDate());
 
-            builder.withClaim("data", Serializer.toMap(user));
+            builder.withClaim("user", Serializer.toMap(user));
 
             String token = builder.sign(algorithm);
 
@@ -52,7 +52,7 @@ public final class JWTHandler {
 
             DecodedJWT jwt = verification.build().verify(token);
 
-            User user = Serializer.fromMap(jwt.getClaim("data").asMap(), User.class);
+            User user = Serializer.fromMap(jwt.getClaim("user").asMap(), User.class);
 
             return Result.success(user);
 

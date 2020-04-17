@@ -19,13 +19,26 @@
                             $t("app.settings")
                         }}</router-link>
 
-                        <router-link class="nav-item nav-link" to="/register">{{
-                            $t("app.register")
-                        }}</router-link>
+                        <router-link
+                            v-if="loggedIn"
+                            class="nav-item nav-link"
+                            to="/account"
+                            >{{ $t("app.account") }}</router-link
+                        >
 
-                        <router-link class="nav-item nav-link" to="/login">{{
-                            $t("app.login")
-                        }}</router-link>
+                        <router-link
+                            v-if="!loggedIn"
+                            class="nav-item nav-link"
+                            to="/register"
+                            >{{ $t("app.register") }}</router-link
+                        >
+
+                        <router-link
+                            v-if="!loggedIn"
+                            class="nav-item nav-link"
+                            to="/login"
+                            >{{ $t("app.login") }}</router-link
+                        >
                     </div>
                 </div>
             </nav>
@@ -40,14 +53,20 @@
     export default {
         name: "App",
         data() {
-            return {
-                authToken: "",
-            };
+            return {};
+        },
+        computed: {
+            loggedIn() {
+                return localStorage.getItem("authToken") != null;
+            },
         },
     };
 </script>
 
 <style scoped>
+    .link-is-active {
+        background: red;
+    }
     .router-content {
         padding-top: 16px;
     }

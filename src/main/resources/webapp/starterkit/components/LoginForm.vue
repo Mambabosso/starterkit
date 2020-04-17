@@ -61,7 +61,7 @@
                 this.loading = true;
                 login(this.username, this.password)
                     .then((result) => {
-                        this.token = result.data.value.hash;
+                        window.localStorage.setItem("authToken", result.data.value.hash);
                         this.status = "OK";
                     })
                     .catch((ex) => {
