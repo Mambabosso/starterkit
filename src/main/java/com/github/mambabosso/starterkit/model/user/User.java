@@ -14,6 +14,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "user")
@@ -30,6 +31,7 @@ public final class User implements Principal, Serializable {
     @Column(name = "name", unique = true)
     private String name;
 
+    @JsonIgnore
     @NotNull
     @Column(name = "mail", unique = true)
     private String mail;

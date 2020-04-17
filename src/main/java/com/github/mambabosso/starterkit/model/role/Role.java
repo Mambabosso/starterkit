@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "role")
@@ -26,10 +27,6 @@ public final class Role implements Serializable {
     @NotNull
     @Column(name = "name", unique = true)
     private String name;
-
-    @NotNull
-    @Column(name = "level")
-    private int level;
 
     @Override
     public boolean equals(Object other) {
