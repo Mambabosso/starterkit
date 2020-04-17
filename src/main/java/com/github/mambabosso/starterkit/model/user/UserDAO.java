@@ -2,7 +2,6 @@ package com.github.mambabosso.starterkit.model.user;
 
 import com.github.mambabosso.starterkit.dao.GenericDAO;
 import org.hibernate.SessionFactory;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Optional;
