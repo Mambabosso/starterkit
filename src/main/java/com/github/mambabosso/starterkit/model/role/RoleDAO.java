@@ -13,13 +13,8 @@ public class RoleDAO extends GenericDAO<Role> {
         super(sessionFactory);
     }
 
-    public Role create(String name, int level) throws Exception {
-        Role role = Role.create(name, level);
-        Long id = (Long)create(role);
-        if (role.getId().equals(id)) {
-            return role;
-        }
-        throw new Exception();
+    public Long create(Role role) {
+        return (Long)save(role);
     }
 
     public Optional<Role> getRoleByName(String name) {

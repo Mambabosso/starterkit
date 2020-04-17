@@ -7,6 +7,7 @@ import com.github.mambabosso.starterkit.model.user.UserDAO;
 import com.github.mambabosso.starterkit.util.Result;
 import com.github.mambabosso.starterkit.util.Validator;
 import lombok.Data;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Objects;
 
@@ -38,7 +39,14 @@ public final class RegisterService {
             if (userDAO.getUserByMail(mail).isPresent()) {
                 return Result.failure(Errors.MAIL_ALREADY_TAKEN);
             }
-            return Result.success(userDAO.create(name, mail, password));
+            User user = new User();
+            user.setName(name);
+            user.setMail(mail);
+            user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(14)));
+            if (userDAO.create(user) > 0) {
+                return Result.success(user);
+            }
+            return Result.failure(Errors.UNKNOWN);
         } catch (Exception ex) {
             return Result.failure(Errors.UNKNOWN);
         }

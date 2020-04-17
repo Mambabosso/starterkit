@@ -2,16 +2,15 @@ package com.github.mambabosso.starterkit.model.role;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "role")
@@ -32,9 +31,6 @@ public final class Role implements Serializable {
     @Column(name = "level")
     private int level;
 
-    private Role() {
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other instanceof Role) {
@@ -42,14 +38,6 @@ public final class Role implements Serializable {
             return this.name.contentEquals(r.name);
         }
         return false;
-    }
-
-    public static Role create(String name, int level) {
-        Objects.requireNonNull(name);
-        Role role = new Role();
-        role.setName(name);
-        role.setLevel(level);
-        return role;
     }
 
 }

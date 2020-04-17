@@ -44,7 +44,7 @@ public abstract class GenericDAO<T extends Serializable> extends AbstractDAO<T> 
         return new HibernateUpdateClause(session(), entityPath);
     }
 
-    protected final Serializable create(final T value) {
+    protected final Serializable save(final T value) {
         Objects.requireNonNull(value);
         return session().save(value);
     }

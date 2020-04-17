@@ -2,6 +2,7 @@ package com.github.mambabosso.starterkit.model.user;
 
 import com.github.mambabosso.starterkit.dao.GenericDAO;
 import org.hibernate.SessionFactory;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,13 +15,8 @@ public class UserDAO extends GenericDAO<User> {
         super(sessionFactory);
     }
 
-    public User create(String name, String mail, String password) throws Exception {
-        User user = User.create(name, mail, password);
-        Long id = (Long)create(user);
-        if (user.getId().equals(id)) {
-            return user;
-        }
-        throw new Exception();
+    public Long create(User user) {
+        return (Long)save(user);
     }
 
     public Optional<User> getUserByName(String name) {
