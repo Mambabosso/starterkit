@@ -3,6 +3,7 @@ package com.github.mambabosso.starterkit.model.role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,9 +21,10 @@ public final class Role implements Serializable {
     @Setter(AccessLevel.NONE)
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "role_id")
-    private Long id;
+    private String id;
 
     @NotNull
     @Column(name = "name", unique = true)

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.mambabosso.starterkit.model.role.Role;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,9 +24,10 @@ public final class User implements Principal, Serializable {
     @Setter(AccessLevel.NONE)
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "user_id")
-    private Long id;
+    private String id;
 
     @NotNull
     @Column(name = "name", unique = true)

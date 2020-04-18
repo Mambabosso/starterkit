@@ -43,7 +43,7 @@ public final class RegisterService {
             user.setName(name);
             user.setMail(mail);
             user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(14)));
-            if (userDAO.create(user) > 0) {
+            if (userDAO.create(user) != null) {
                 return Result.success(user);
             }
             return Result.failure(Errors.UNKNOWN);

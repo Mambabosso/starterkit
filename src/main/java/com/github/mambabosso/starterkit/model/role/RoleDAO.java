@@ -13,8 +13,8 @@ public class RoleDAO extends GenericDAO<Role> {
         super(sessionFactory);
     }
 
-    public Long create(Role role) {
-        return (Long)save(role);
+    public String create(Role role) {
+        return (String)save(role);
     }
 
     public Optional<Role> getRoleByName(String name) {

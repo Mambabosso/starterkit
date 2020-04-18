@@ -14,8 +14,8 @@ public class UserDAO extends GenericDAO<User> {
         super(sessionFactory);
     }
 
-    public Long create(User user) {
-        return (Long)save(user);
+    public String create(User user) {
+        return (String)save(user);
     }
 
     public Optional<User> getUserByName(String name) {
