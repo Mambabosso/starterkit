@@ -10,7 +10,7 @@ import io.dropwizard.auth.Authenticator;
 import java.util.Objects;
 import java.util.Optional;
 
-public class UserAuthenticator implements Authenticator<String, User> {
+public final class UserAuthenticator implements Authenticator<String, User> {
 
     private final JWTConfiguration jwtConfiguration;
 

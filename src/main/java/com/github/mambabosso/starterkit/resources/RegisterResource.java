@@ -31,7 +31,7 @@ public class RegisterResource {
         String password = dataMap.tryGet("password", String.class);
         Result<User> user = registerService.register(name, mail, password);
         if (user.isSuccess()) {
-            return Response.ok(user).build();
+            return Response.status(200).entity(user).build();
         }
         return Response.status(400).entity(user).build();
     }
